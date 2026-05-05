@@ -4,15 +4,16 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimiento & Mirar")]
-    [SerializeField] GameObject camHolder; //ref al obj q tiene como hijo la cámara (rota por la cámara)
+    [SerializeField] GameObject camHolder;
     [SerializeField] float speed = 5;
-    [SerializeField] float sensitivity = 0.1f; //Sensibilidad para input
+    [SerializeField] float sensitivity = 0.1f;
 
-    //Variables de ref privadas:
-    Rigidbody rb; //ref al rb del PL
-    Animator anim; //ref añ animator del PL
+    [Header("Detección")]
+    [SerializeField] AnomalyDetector anomalyDetector;
 
-    //Variables para input:
+    Rigidbody rb;
+    Animator anim;
+
     Vector2 MoveInput;
     Vector2 lookInput;
     float lookRotation;
@@ -23,36 +24,37 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //lock cursor ratón
-        Cursor.lockState = CursorLockMode.Locked; //Mueve curson a centro
-        Cursor.visible = false; //Oculta cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Debug.DrawRay(camHolder.transform.position, camHolder.transform.forward * 100f, Color.red);
     }
+
     private void FixedUpdate()
     {
         Movement();
     }
+
     private void LateUpdate()
     {
         CameraLook();
     }
+
     void CameraLook()
     {
-        //rotacion horizontal del cuerpo del PJ
         transform.Rotate(Vector3.up * lookInput.x * sensitivity);
-        //Rotacion vertical (la camara la lleva)
-        lookRotation += (-lookInput.y * sensitivity);
+
+        lookRotation += -lookInput.y * sensitivity;
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
+
         camHolder.transform.localEulerAngles = new Vector3(lookRotation, 0f, 0f);
     }
+
     void Movement()
     {
         Vector3 direction = new Vector3(MoveInput.x, 0, MoveInput.y);
@@ -62,13 +64,31 @@ public class PlayerController : MonoBehaviour
     }
 
     #region INPUT METHODS
+
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveInput = context.ReadValue<Vector2>();
     }
+
     public void OnLook(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
     }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (anomalyDetector == null) return;
+
+        if (context.started)
+        {
+            anomalyDetector.SetDetecting(true);
+        }
+
+        if (context.canceled)
+        {
+            anomalyDetector.SetDetecting(false);
+        }
+    }
+
     #endregion
 }
