@@ -205,9 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787bcb92840312d4681da50db43437c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyTarget
+  tipo: 0
   isFixed: 0
-  anomalyVersion: {fileID: 632749441}
-  fixedVersion: {fileID: 1384842964}
+  objetoCorregido: {fileID: 0}
   onFixed:
     m_PersistentCalls:
       m_Calls: []
@@ -399,42 +399,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9faedb91983677942854e80053ffa080, type: 3}
---- !u!1 &223055920 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7923529655431211208, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-  m_PrefabInstance: {fileID: 1553708940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &223055923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4668455851645982591, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
   m_PrefabInstance: {fileID: 1553708940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223055920}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4e17b5565198fe4ba331508167baab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!114 &223055926
+--- !u!114 &223055926 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7298464124254849999, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
+  m_PrefabInstance: {fileID: 1553708940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223055920}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25118d516b6e1cc48a290e56d65c9244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyDetector
-  playerCamera: {fileID: 1452229623}
-  detectionDistance: 5
-  anomalyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  timeToFix: 2
-  resetProgressWhenNotLooking: 1
-  showDebugRay: 1
 --- !u!1001 &439904404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1404,11 +1390,6 @@ Transform:
   - {fileID: 632749446}
   m_Father: {fileID: 114110902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1452229623 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1137219650479088363, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-  m_PrefabInstance: {fileID: 1553708940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1553708940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1461,10 +1442,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6094784989159931971, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_ImplicitTensor
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7923529655431211208, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1472,10 +1449,6 @@ PrefabInstance:
     - target: {fileID: 8294400598202939230, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8294400598202939230, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8294400598202939230, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1500,10 +1473,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7923529655431211208, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 223055926}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
 --- !u!1001 &1973296142
 PrefabInstance:

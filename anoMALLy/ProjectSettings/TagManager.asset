@@ -8,7 +8,7 @@ TagManager:
   - entity_anomalies
   - extra_obj_anomaly
   - texture_anomaly
-  - scale_anomaly
+  - modificated_obj_anomaly
   layers:
   - Default
   - TransparentFX

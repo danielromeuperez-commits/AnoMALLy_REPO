@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [Header("Detección")]
     [SerializeField] AnomalyDetector anomalyDetector;
 
+    [Header("Pause Player")]
+    [SerializeField] bool controlEnabled = true;
+
     Rigidbody rb;
     Animator anim;
 
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        controlEnabled = true;
     }
 
     void Start()
@@ -47,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     void CameraLook()
     {
+        if (!controlEnabled) return;
+
         transform.Rotate(Vector3.up * lookInput.x * sensitivity);
 
         lookRotation += -lookInput.y * sensitivity;
@@ -55,8 +61,20 @@ public class PlayerController : MonoBehaviour
         camHolder.transform.localEulerAngles = new Vector3(lookRotation, 0f, 0f);
     }
 
+    public void SetControls(bool value)
+    {
+        controlEnabled = value;
+
+        if (!value)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+    }
+
     void Movement()
     {
+        if (!controlEnabled) return;
+
         Vector3 direction = new Vector3(MoveInput.x, 0, MoveInput.y);
         direction = transform.TransformDirection(direction);
 
@@ -77,6 +95,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (!controlEnabled) return;
+
         if (anomalyDetector == null) return;
 
         if (context.started)
