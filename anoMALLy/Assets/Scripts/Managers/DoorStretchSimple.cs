@@ -24,6 +24,9 @@ public class DoorStretchSimple : MonoBehaviour
     [Header("Player")]
     [SerializeField] Transform player;
 
+    [Header("Zona final que se aleja")]
+    [SerializeField] Transform corridorEndSection;
+
     [Header("Suelos que se estiran")]
     [SerializeField] Transform[] floorsToStretch;
 
@@ -50,6 +53,7 @@ public class DoorStretchSimple : MonoBehaviour
     bool isActive;
 
     Vector3 triggerStartPosition;
+    Vector3 corridorEndStartPosition;
 
     Vector3[] floorStartScales;
     Vector3[] fixedBackEdges;
@@ -60,9 +64,15 @@ public class DoorStretchSimple : MonoBehaviour
     {
         triggerStartPosition = transform.position;
 
+        if (corridorEndSection != null)
+        {
+            corridorEndStartPosition = corridorEndSection.position;
+        }
+
         SetupFloors();
 
         UpdateFloors(0f);
+        UpdateEndSection(0f);
     }
 
     private void Update()
@@ -74,6 +84,7 @@ public class DoorStretchSimple : MonoBehaviour
 
         MoveTrigger(stretchAmount);
         UpdateFloors(stretchAmount);
+        UpdateEndSection(stretchAmount);
     }
 
     void SetupFloors()
@@ -107,8 +118,8 @@ public class DoorStretchSimple : MonoBehaviour
 
             floorStartWorldLengths[i] = Mathf.Max(0.01f, length);
 
-            // Guardamos el borde trasero real del mesh.
-            // Este punto NO se debe mover nunca.
+            // Guardamos el borde trasero real del suelo.
+            // Este punto NO se mueve nunca.
             fixedBackEdges[i] = GetBackEdge(bounds, direction);
         }
     }
@@ -145,6 +156,15 @@ public class DoorStretchSimple : MonoBehaviour
         );
     }
 
+    void UpdateEndSection(float stretchAmount)
+    {
+        if (corridorEndSection == null) return;
+
+        Vector3 direction = GetForwardDirection();
+
+        corridorEndSection.position = corridorEndStartPosition + direction * stretchAmount;
+    }
+
     void UpdateFloors(float stretchAmount)
     {
         Vector3 direction = GetForwardDirection();
@@ -177,14 +197,14 @@ public class DoorStretchSimple : MonoBehaviour
                     break;
             }
 
-            // 1. Escalamos.
+            // 1. Escalamos el suelo.
             floorsToStretch[i].localScale = newScale;
 
             // 2. Calculamos dónde está ahora el borde trasero.
             Bounds newBounds = rend.bounds;
             Vector3 currentBackEdge = GetBackEdge(newBounds, direction);
 
-            // 3. Movemos SOLO lo necesario para que el borde trasero vuelva a su sitio.
+            // 3. Corregimos la posición para que el borde trasero se quede fijo.
             Vector3 correction = fixedBackEdges[i] - currentBackEdge;
 
             floorsToStretch[i].position += correction;
