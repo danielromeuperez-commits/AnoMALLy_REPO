@@ -12,7 +12,6 @@ public class AnomalyTarget : MonoBehaviour
         ModifiedObject
     }
 
-
     [Header("Tipo")]
     [SerializeField] TipoAnomalia tipo;
     public TipoAnomalia Tipo => tipo;
@@ -24,6 +23,9 @@ public class AnomalyTarget : MonoBehaviour
     [Header("Objeto alternativo (para cambiar)")]
     [SerializeField] GameObject objetoCorregido;
 
+    [Header("Managers")]
+    [SerializeField] AnomalyManager anomalyManager;
+
     [Header("Eventos Opcionales")]
     [SerializeField] UnityEvent onFixed;
 
@@ -31,6 +33,7 @@ public class AnomalyTarget : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] float pitchAnomaly = -1f;
     [SerializeField] float pitchDefault = 1f;
+
     private void Awake()
     {
         // Auto-detectar tipo por tag
@@ -56,6 +59,7 @@ public class AnomalyTarget : MonoBehaviour
                 tipo = TipoAnomalia.ModifiedObject;
                 break;
         }
+
         if (tipo == TipoAnomalia.Sound)
         {
             if (audioSource == null)
@@ -65,6 +69,14 @@ public class AnomalyTarget : MonoBehaviour
             {
                 audioSource.pitch = pitchAnomaly;
             }
+        }
+    }
+
+    private void Start()
+    {
+        if (objetoCorregido != null && !isFixed)
+        {
+            objetoCorregido.SetActive(false);
         }
     }
 
@@ -98,18 +110,25 @@ public class AnomalyTarget : MonoBehaviour
                 break;
 
             case TipoAnomalia.Sound:
-                {
-                    if (audioSource == null)
-                        audioSource = gameObject.GetComponent<AudioSource>();
+                if (audioSource == null)
+                    audioSource = gameObject.GetComponent<AudioSource>();
 
-                    if (audioSource != null)
-                    {
-                        audioSource.pitch = pitchDefault;
-                    }
+                if (audioSource != null)
+                {
+                    audioSource.pitch = pitchDefault;
                 }
                 break;
         }
 
         onFixed?.Invoke();
+
+        if (anomalyManager != null)
+        {
+            anomalyManager.RegisterFixedAnomaly(this);
+        }
+        else
+        {
+            Debug.LogWarning("No hay AnomalyManager asignado en: " + gameObject.name);
+        }
     }
 }
