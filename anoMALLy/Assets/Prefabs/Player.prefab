@@ -304,6 +304,7 @@ MonoBehaviour:
   speed: 3
   sensitivity: 0.1
   anomalyDetector: {fileID: 7298464124254849999}
+  controlEnabled: 1
 --- !u!114 &8294400598202939230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,10 +397,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyDetector
   playerCamera: {fileID: 1137219650479088363}
   menuUI: {fileID: 0}
-  detectionDistance: 5
+  playerController: {fileID: 4668455851645982591}
+  detectionDistance: 100
   anomalyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   timeToFix: 2
   resetProgressWhenNotLooking: 1
   showDebugRay: 1

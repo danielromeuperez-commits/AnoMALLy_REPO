@@ -4264,18 +4264,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1987314891575039978, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2778972284253464981, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4175898864526260923, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.47
@@ -4325,16 +4313,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 715545655}
     - target: {fileID: 7298464124254849999, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
+      propertyPath: detectionDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298464124254849999, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: anomalyLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7923529655431211208, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7923529655431211208, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

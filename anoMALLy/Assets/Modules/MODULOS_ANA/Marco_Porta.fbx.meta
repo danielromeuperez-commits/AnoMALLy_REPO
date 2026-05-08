@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d0a637c983d747243ae0f55eebed2c61
+guid: df9b93e9f667a054aa69823b513838fd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -9,6 +9,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: M_PaintedWall
     second: {fileID: 2100000, guid: cc83952877c69d443b498017035e9c3d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marco
+    second: {fileID: 2100000, guid: 3312da83f47f311409264135b0b500f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: persiana
+    second: {fileID: 2100000, guid: d7304d5c98c53cc4098302045da11228, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
