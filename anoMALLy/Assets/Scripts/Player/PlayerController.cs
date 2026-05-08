@@ -15,16 +15,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool controlEnabled = true;
 
     Rigidbody rb;
-    Animator anim;
 
     Vector2 MoveInput;
     Vector2 lookInput;
     float lookRotation;
+    public Animator animator;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
         controlEnabled = true;
     }
 
@@ -101,11 +100,13 @@ public class PlayerController : MonoBehaviour
 
         if (context.started)
         {
+            animator.SetBool("Point", true);
             anomalyDetector.SetDetecting(true);
         }
 
         if (context.canceled)
         {
+            animator.SetBool("Point", false);
             anomalyDetector.SetDetecting(false);
         }
     }
