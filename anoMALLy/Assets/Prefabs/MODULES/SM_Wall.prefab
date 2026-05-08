@@ -48,9 +48,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7174424671602191969, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
       propertyPath: m_Name
-      value: PARET
+      value: SM_Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789143179089556674, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646174089899847560, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 44b7c706ff38fd34986f5fb0b8a2da60, type: 2}
+    - target: {fileID: 5016098732401183939, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
