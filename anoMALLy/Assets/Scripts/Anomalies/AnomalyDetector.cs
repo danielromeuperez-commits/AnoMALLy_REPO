@@ -123,11 +123,13 @@ public class AnomalyDetector : MonoBehaviour
             currentAnomaly.FixAnomaly();
             detectedCorrectly = true;
             animator.SetTrigger("Correct");
+            animator.SetBool("Point", false);
         }
         else
         {
             intentos--;
             animator.SetTrigger("Wrong");
+            animator.SetBool("Point", false);
             isHoldingDetect = false;
 
             if (intentos <= 0)
@@ -137,6 +139,7 @@ public class AnomalyDetector : MonoBehaviour
         }
 
         ResetDetection();
+        SetDetecting(false);
     }
 
     public bool CheckAnomaly()
