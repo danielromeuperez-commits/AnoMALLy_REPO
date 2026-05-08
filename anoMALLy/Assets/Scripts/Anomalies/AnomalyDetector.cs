@@ -22,10 +22,12 @@ public class AnomalyDetector : MonoBehaviour
     bool isHoldingDetect;
     float currentFixTime;
     AnomalyTarget currentAnomaly;
+    public Animator animator;
 
     bool esperandoRespuesta = false;
+    bool detectedCorrectly;
 
-    int intentos = 3;
+    public int intentos = 3;
 
     private void Update()
     {
@@ -119,10 +121,13 @@ public class AnomalyDetector : MonoBehaviour
         if ((int)currentAnomaly.Tipo == tipoElegido)
         {
             currentAnomaly.FixAnomaly();
+            detectedCorrectly = true;
+            animator.SetTrigger("Correct");
         }
         else
         {
             intentos--;
+            animator.SetTrigger("Wrong");
             isHoldingDetect = false;
 
             if (intentos <= 0)
@@ -132,6 +137,11 @@ public class AnomalyDetector : MonoBehaviour
         }
 
         ResetDetection();
+    }
+
+    public bool CheckAnomaly()
+    {
+        return detectedCorrectly;
     }
 
     void ResetDetection()
