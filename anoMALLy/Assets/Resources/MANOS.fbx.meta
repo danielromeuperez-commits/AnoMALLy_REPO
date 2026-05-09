@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: c584b6bf9404aad488b08713c09d7e38
+guid: a5eb43ce552e5494da7d3dcaa4a7910c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HANDS
+    second: {fileID: 2100000, guid: feec1ffc7f431bf4dbe41555b839a64e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -60,11 +65,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Player_ANIM_Idle
-      takeName: Player_ANIM_Idle
-      internalID: 757500223139707664
+      name: Player_ANIM_IDLEC
+      takeName: Player_ANIM_IDLEC
+      internalID: 5506403472887912969
       firstFrame: 0
-      lastFrame: 119
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -158,7 +163,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
