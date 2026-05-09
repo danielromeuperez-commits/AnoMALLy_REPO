@@ -24,17 +24,20 @@ public class WallStretch : MonoBehaviour
     [Header("Player")]
     [SerializeField] Transform player;
 
+    [Header("Managers")]
+    [SerializeField] AnomalyManager anomalyManager;
+
     [Header("Zona final que se aleja")]
     [SerializeField] Transform corridorEndSection;
 
-    [Header("Suelos que se estiran")]
+    [Header("Paredes que se estiran")]
     [SerializeField] Transform[] floorsToStretch;
 
     [Header("Dirección hacia delante")]
     [SerializeField] WorldAxis moveAxis = WorldAxis.X;
     [SerializeField] bool invertDirection = true;
 
-    [Header("Eje que escala el suelo")]
+    [Header("Eje que escala la pared")]
     [SerializeField] LocalScaleAxis floorScaleAxis = LocalScaleAxis.X;
 
     [Header("Eje del tiling")]
@@ -51,18 +54,27 @@ public class WallStretch : MonoBehaviour
     [SerializeField] bool showDebugLogs = true;
 
     bool isActive;
+    bool stretchDisabled;
 
     Vector3 triggerStartPosition;
     Vector3 corridorEndStartPosition;
 
     Vector3[] floorStartScales;
+    Vector3[] floorStartPositions;
     Vector3[] fixedBackEdges;
     float[] floorStartWorldLengths;
     Material[] floorMaterials;
+    Vector2[] originalTiling;
+    Vector2[] originalOffset;
 
     private void Start()
     {
         triggerStartPosition = transform.position;
+
+        if (anomalyManager == null)
+        {
+            anomalyManager = FindAnyObjectByType<AnomalyManager>();
+        }
 
         if (corridorEndSection != null)
         {
@@ -79,6 +91,12 @@ public class WallStretch : MonoBehaviour
     {
         if (!isActive || player == null) return;
 
+        if (anomalyManager != null && anomalyManager.AllAnomaliesFixed)
+        {
+            DisableStretchForever();
+            return;
+        }
+
         float stretchAmount = GetPlayerDistanceFromTriggerStart();
         stretchAmount = Mathf.Clamp(stretchAmount, 0f, maxStretchDistance);
 
@@ -87,12 +105,68 @@ public class WallStretch : MonoBehaviour
         UpdateEndSection(stretchAmount);
     }
 
+    void DisableStretchForever()
+    {
+        if (stretchDisabled) return;
+
+        stretchDisabled = true;
+        isActive = false;
+
+        transform.position = triggerStartPosition;
+
+        if (corridorEndSection != null)
+        {
+            corridorEndSection.position = corridorEndStartPosition;
+        }
+
+        RestoreOriginalWalls();
+
+        if (showDebugLogs)
+        {
+            Debug.Log(gameObject.name + ": todas las anomalías corregidas. Las paredes ya no se alejan.");
+        }
+    }
+
+    void RestoreOriginalWalls()
+    {
+        for (int i = 0; i < floorsToStretch.Length; i++)
+        {
+            if (floorsToStretch[i] == null) continue;
+
+            floorsToStretch[i].localScale = floorStartScales[i];
+            floorsToStretch[i].position = floorStartPositions[i];
+
+            RestoreOriginalTiling(i);
+        }
+    }
+
+    void RestoreOriginalTiling(int index)
+    {
+        if (floorMaterials == null) return;
+        if (index < 0 || index >= floorMaterials.Length) return;
+        if (floorMaterials[index] == null) return;
+
+        if (floorMaterials[index].HasProperty("_BaseMap"))
+        {
+            floorMaterials[index].SetTextureScale("_BaseMap", originalTiling[index]);
+            floorMaterials[index].SetTextureOffset("_BaseMap", originalOffset[index]);
+        }
+        else if (floorMaterials[index].HasProperty("_MainTex"))
+        {
+            floorMaterials[index].SetTextureScale("_MainTex", originalTiling[index]);
+            floorMaterials[index].SetTextureOffset("_MainTex", originalOffset[index]);
+        }
+    }
+
     void SetupFloors()
     {
         floorStartScales = new Vector3[floorsToStretch.Length];
+        floorStartPositions = new Vector3[floorsToStretch.Length];
         fixedBackEdges = new Vector3[floorsToStretch.Length];
         floorStartWorldLengths = new float[floorsToStretch.Length];
         floorMaterials = new Material[floorsToStretch.Length];
+        originalTiling = new Vector2[floorsToStretch.Length];
+        originalOffset = new Vector2[floorsToStretch.Length];
 
         Vector3 direction = GetForwardDirection();
 
@@ -101,16 +175,19 @@ public class WallStretch : MonoBehaviour
             if (floorsToStretch[i] == null) continue;
 
             floorStartScales[i] = floorsToStretch[i].localScale;
+            floorStartPositions[i] = floorsToStretch[i].position;
 
             Renderer rend = floorsToStretch[i].GetComponent<Renderer>();
 
             if (rend == null)
             {
-                Debug.LogWarning("El suelo no tiene Renderer: " + floorsToStretch[i].name);
+                Debug.LogWarning("La pared no tiene Renderer: " + floorsToStretch[i].name);
                 continue;
             }
 
             floorMaterials[i] = rend.material;
+
+            SaveOriginalTiling(i);
 
             Bounds bounds = rend.bounds;
 
@@ -118,9 +195,28 @@ public class WallStretch : MonoBehaviour
 
             floorStartWorldLengths[i] = Mathf.Max(0.01f, length);
 
-            // Guardamos el borde trasero real del suelo.
-            // Este punto NO se mueve nunca.
             fixedBackEdges[i] = GetBackEdge(bounds, direction);
+        }
+    }
+
+    void SaveOriginalTiling(int index)
+    {
+        if (floorMaterials[index] == null) return;
+
+        if (floorMaterials[index].HasProperty("_BaseMap"))
+        {
+            originalTiling[index] = floorMaterials[index].GetTextureScale("_BaseMap");
+            originalOffset[index] = floorMaterials[index].GetTextureOffset("_BaseMap");
+        }
+        else if (floorMaterials[index].HasProperty("_MainTex"))
+        {
+            originalTiling[index] = floorMaterials[index].GetTextureScale("_MainTex");
+            originalOffset[index] = floorMaterials[index].GetTextureOffset("_MainTex");
+        }
+        else
+        {
+            originalTiling[index] = Vector2.one;
+            originalOffset[index] = Vector2.zero;
         }
     }
 
@@ -145,6 +241,8 @@ public class WallStretch : MonoBehaviour
 
     void MoveTrigger(float stretchAmount)
     {
+        if (stretchDisabled) return;
+
         Vector3 direction = GetForwardDirection();
 
         Vector3 targetPosition = triggerStartPosition + direction * stretchAmount;
@@ -158,6 +256,7 @@ public class WallStretch : MonoBehaviour
 
     void UpdateEndSection(float stretchAmount)
     {
+        if (stretchDisabled) return;
         if (corridorEndSection == null) return;
 
         Vector3 direction = GetForwardDirection();
@@ -167,6 +266,8 @@ public class WallStretch : MonoBehaviour
 
     void UpdateFloors(float stretchAmount)
     {
+        if (stretchDisabled) return;
+
         Vector3 direction = GetForwardDirection();
 
         for (int i = 0; i < floorsToStretch.Length; i++)
@@ -197,14 +298,11 @@ public class WallStretch : MonoBehaviour
                     break;
             }
 
-            // 1. Escalamos el suelo.
             floorsToStretch[i].localScale = newScale;
 
-            // 2. Calculamos dónde está ahora el borde trasero.
             Bounds newBounds = rend.bounds;
             Vector3 currentBackEdge = GetBackEdge(newBounds, direction);
 
-            // 3. Corregimos la posición para que el borde trasero se quede fijo.
             Vector3 correction = fixedBackEdges[i] - currentBackEdge;
 
             floorsToStretch[i].position += correction;
@@ -235,6 +333,8 @@ public class WallStretch : MonoBehaviour
 
     void UpdateTiling(int index, float currentWorldLength)
     {
+        if (stretchDisabled) return;
+
         if (floorMaterials == null) return;
         if (index < 0 || index >= floorMaterials.Length) return;
         if (floorMaterials[index] == null) return;
@@ -246,18 +346,14 @@ public class WallStretch : MonoBehaviour
 
         if (textureTilingAxis == TextureAxis.X)
         {
-            // Tiling invertido
             tiling.x = -repeatAmount;
             tiling.y = 1f;
-
-            // Compensación visual
             offset.x = repeatAmount;
         }
         else
         {
             tiling.x = 1f;
             tiling.y = -repeatAmount;
-
             offset.y = repeatAmount;
         }
 
@@ -275,16 +371,18 @@ public class WallStretch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (stretchDisabled) return;
         if (!other.CompareTag("Player")) return;
 
         isActive = true;
 
         if (showDebugLogs)
-            Debug.Log("Player tocó Door_Stretch_Trigger. El trigger empieza a seguirlo.");
+            Debug.Log("Player tocó WallStretch. La pared empieza a seguirlo.");
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (stretchDisabled) return;
         if (!other.CompareTag("Player")) return;
 
         isActive = true;

@@ -18,6 +18,9 @@ public class AnomalyDetector : MonoBehaviour
     [SerializeField] float timeToFix = 2f;
     [SerializeField] bool resetProgressWhenNotLooking = true;
 
+    [Header("Resaltado")]
+    [SerializeField] float timeToShowHighlight = 1f;
+
     [Header("Debug")]
     [SerializeField] bool showDebugRay = true;
 
@@ -28,6 +31,7 @@ public class AnomalyDetector : MonoBehaviour
 
     bool esperandoRespuesta = false;
     bool detectedCorrectly;
+    bool highlightShown;
 
     public int intentos = 3;
 
@@ -68,8 +72,14 @@ public class AnomalyDetector : MonoBehaviour
             {
                 if (currentAnomaly != anomaly)
                 {
+                    if (currentAnomaly != null)
+                    {
+                        currentAnomaly.StopHighlight();
+                    }
+
                     currentAnomaly = anomaly;
                     currentFixTime = 0f;
+                    highlightShown = false;
 
                     Debug.Log("Detectando: " + anomaly.gameObject.name);
                 }
@@ -78,6 +88,13 @@ public class AnomalyDetector : MonoBehaviour
 
                 float progress = currentFixTime / timeToFix;
                 currentAnomaly.SetDetectionProgress(progress);
+
+                // El borde aparece solo si llevas manteniendo pulsado 1 segundo sobre el mismo objeto.
+                if (!highlightShown && currentFixTime >= timeToShowHighlight)
+                {
+                    currentAnomaly.StartHighlight();
+                    highlightShown = true;
+                }
 
                 if (currentFixTime >= timeToFix && !esperandoRespuesta)
                 {
@@ -97,6 +114,11 @@ public class AnomalyDetector : MonoBehaviour
     void MostrarMenu()
     {
         esperandoRespuesta = true;
+
+        if (currentAnomaly != null)
+        {
+            currentAnomaly.StopHighlight();
+        }
 
         menuUI.SetActive(true);
 
@@ -127,13 +149,21 @@ public class AnomalyDetector : MonoBehaviour
         else
         {
             intentos--;
+
+            if (currentAnomaly != null)
+            {
+                currentAnomaly.PlayWrongSFX();
+                currentAnomaly.StopHighlight();
+            }
+
             animator.SetTrigger("Wrong");
             animator.SetBool("Point", false);
             isHoldingDetect = false;
+            detectedCorrectly = false;
 
             if (intentos <= 0)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                SceneManager.LoadScene(0);
             }
         }
 
@@ -144,13 +174,25 @@ public class AnomalyDetector : MonoBehaviour
     IEnumerator FixAnomalySequence()
     {
         fixingAnomalyCanvas.SetActive(true);
+
         AudioManager.Instance.PlaySFX(0);
+
         Time.timeScale = 0f;
-        currentAnomaly.FixAnomaly();
+
+        if (currentAnomaly != null)
+        {
+            currentAnomaly.StopHighlight();
+            currentAnomaly.FixAnomaly();
+        }
+
         detectedCorrectly = true;
+
         yield return new WaitForSecondsRealtime(2f);
+
         fixingAnomalyCanvas.SetActive(false);
+
         Time.timeScale = 1f;
+
         animator.SetTrigger("Correct");
         animator.SetBool("Point", false);
     }
@@ -165,9 +207,11 @@ public class AnomalyDetector : MonoBehaviour
         if (currentAnomaly != null && !currentAnomaly.IsFixed)
         {
             currentAnomaly.SetDetectionProgress(0f);
+            currentAnomaly.StopHighlight();
         }
 
         currentAnomaly = null;
         currentFixTime = 0f;
+        highlightShown = false;
     }
 }

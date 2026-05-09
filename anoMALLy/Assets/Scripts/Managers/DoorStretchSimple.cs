@@ -24,6 +24,9 @@ public class DoorStretchSimple : MonoBehaviour
     [Header("Player")]
     [SerializeField] Transform player;
 
+    [Header("Managers")]
+    [SerializeField] AnomalyManager anomalyManager;
+
     [Header("Zona final que se aleja")]
     [SerializeField] Transform corridorEndSection;
 
@@ -47,6 +50,18 @@ public class DoorStretchSimple : MonoBehaviour
     [Header("Tiling")]
     [SerializeField] float textureRepeatEveryWorldUnit = 1f;
 
+    [Header("Audio movimiento pasillo")]
+    [SerializeField] AudioSource corridorMoveLoopSource;
+    [SerializeField] float movementSoundMinDelta = 0.02f;
+    [SerializeField] float movementSoundVolume = 0.35f;
+    [SerializeField] float soundFadeSpeed = 8f;
+
+    [Tooltip("Tiempo que espera antes de parar el audio cuando deja de detectar movimiento. Evita cortes petados.")]
+    [SerializeField] float stopAfterNoMovementTime = 0.15f;
+
+    [Tooltip("Tiempo mínimo que el audio debe sonar antes de poder pararse. Evita Play/Stop demasiado rápidos.")]
+    [SerializeField] float minPlayTime = 0.3f;
+
     [Header("Debug")]
     [SerializeField] bool showDebugLogs = true;
 
@@ -60,6 +75,11 @@ public class DoorStretchSimple : MonoBehaviour
     float[] floorStartWorldLengths;
     Material[] floorMaterials;
 
+    float lastStretchAmount;
+    float noMovementTimer;
+    float playTimer;
+    float targetAudioVolume;
+
     private void Start()
     {
         triggerStartPosition = transform.position;
@@ -69,22 +89,114 @@ public class DoorStretchSimple : MonoBehaviour
             corridorEndStartPosition = corridorEndSection.position;
         }
 
+        SetupAudio();
+
         SetupFloors();
 
         UpdateFloors(0f);
         UpdateEndSection(0f);
+
+        lastStretchAmount = 0f;
     }
 
     private void Update()
     {
-        if (!isActive || player == null) return;
+        if (!isActive || player == null)
+        {
+            HandleCorridorAudio(false);
+            return;
+        }
 
-        float stretchAmount = GetPlayerDistanceFromTriggerStart();
-        stretchAmount = Mathf.Clamp(stretchAmount, 0f, maxStretchDistance);
+        // Si ya están todas las anomalías corregidas,
+        // la puerta deja de alejarse y vuelve a su posición normal.
+        if (anomalyManager != null && anomalyManager.AllAnomaliesFixed)
+        {
+            float stretchAmount = 0f;
 
-        MoveTrigger(stretchAmount);
-        UpdateFloors(stretchAmount);
-        UpdateEndSection(stretchAmount);
+            HandleCorridorAudio(false);
+
+            MoveTrigger(stretchAmount);
+            UpdateFloors(stretchAmount);
+            UpdateEndSection(stretchAmount);
+
+            lastStretchAmount = stretchAmount;
+
+            return;
+        }
+
+        float currentStretchAmount = GetPlayerDistanceFromTriggerStart();
+        currentStretchAmount = Mathf.Clamp(currentStretchAmount, 0f, maxStretchDistance);
+
+        bool corridorIsMoving = Mathf.Abs(currentStretchAmount - lastStretchAmount) > movementSoundMinDelta;
+
+        HandleCorridorAudio(corridorIsMoving);
+
+        MoveTrigger(currentStretchAmount);
+        UpdateFloors(currentStretchAmount);
+        UpdateEndSection(currentStretchAmount);
+
+        lastStretchAmount = currentStretchAmount;
+    }
+
+    void SetupAudio()
+    {
+        if (corridorMoveLoopSource == null) return;
+
+        corridorMoveLoopSource.loop = true;
+        corridorMoveLoopSource.playOnAwake = false;
+        corridorMoveLoopSource.volume = 0f;
+        corridorMoveLoopSource.Stop();
+
+        targetAudioVolume = 0f;
+        noMovementTimer = 0f;
+        playTimer = 0f;
+    }
+
+    void HandleCorridorAudio(bool corridorIsMoving)
+    {
+        if (corridorMoveLoopSource == null) return;
+
+        if (corridorIsMoving)
+        {
+            noMovementTimer = 0f;
+            targetAudioVolume = movementSoundVolume;
+
+            if (!corridorMoveLoopSource.isPlaying)
+            {
+                corridorMoveLoopSource.volume = 0f;
+                corridorMoveLoopSource.Play();
+                playTimer = 0f;
+            }
+        }
+        else
+        {
+            noMovementTimer += Time.deltaTime;
+
+            if (noMovementTimer >= stopAfterNoMovementTime && playTimer >= minPlayTime)
+            {
+                targetAudioVolume = 0f;
+            }
+        }
+
+        if (corridorMoveLoopSource.isPlaying)
+        {
+            playTimer += Time.deltaTime;
+        }
+
+        corridorMoveLoopSource.volume = Mathf.MoveTowards(
+            corridorMoveLoopSource.volume,
+            targetAudioVolume,
+            soundFadeSpeed * Time.deltaTime
+        );
+
+        if (corridorMoveLoopSource.isPlaying &&
+            targetAudioVolume <= 0f &&
+            corridorMoveLoopSource.volume <= 0.01f)
+        {
+            corridorMoveLoopSource.Stop();
+            corridorMoveLoopSource.volume = 0f;
+            playTimer = 0f;
+        }
     }
 
     void SetupFloors()
@@ -118,8 +230,6 @@ public class DoorStretchSimple : MonoBehaviour
 
             floorStartWorldLengths[i] = Mathf.Max(0.01f, length);
 
-            // Guardamos el borde trasero real del suelo.
-            // Este punto NO se mueve nunca.
             fixedBackEdges[i] = GetBackEdge(bounds, direction);
         }
     }
@@ -197,14 +307,11 @@ public class DoorStretchSimple : MonoBehaviour
                     break;
             }
 
-            // 1. Escalamos el suelo.
             floorsToStretch[i].localScale = newScale;
 
-            // 2. Calculamos dónde está ahora el borde trasero.
             Bounds newBounds = rend.bounds;
             Vector3 currentBackEdge = GetBackEdge(newBounds, direction);
 
-            // 3. Corregimos la posición para que el borde trasero se quede fijo.
             Vector3 correction = fixedBackEdges[i] - currentBackEdge;
 
             floorsToStretch[i].position += correction;
