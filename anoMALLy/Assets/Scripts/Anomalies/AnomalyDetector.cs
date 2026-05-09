@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class AnomalyDetector : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] Camera playerCamera;
     [SerializeField] GameObject menuUI;
+    [SerializeField] GameObject fixingAnomalyCanvas;
     [SerializeField] PlayerController playerController;
 
     [Header("Raycast")]
@@ -120,10 +122,7 @@ public class AnomalyDetector : MonoBehaviour
 
         if ((int)currentAnomaly.Tipo == tipoElegido)
         {
-            currentAnomaly.FixAnomaly();
-            detectedCorrectly = true;
-            animator.SetTrigger("Correct");
-            animator.SetBool("Point", false);
+            StartCoroutine(FixAnomalySequence());
         }
         else
         {
@@ -140,6 +139,20 @@ public class AnomalyDetector : MonoBehaviour
 
         ResetDetection();
         SetDetecting(false);
+    }
+
+    IEnumerator FixAnomalySequence()
+    {
+        fixingAnomalyCanvas.SetActive(true);
+        AudioManager.Instance.PlaySFX(0);
+        Time.timeScale = 0f;
+        currentAnomaly.FixAnomaly();
+        detectedCorrectly = true;
+        yield return new WaitForSecondsRealtime(2f);
+        fixingAnomalyCanvas.SetActive(false);
+        Time.timeScale = 1f;
+        animator.SetTrigger("Correct");
+        animator.SetBool("Point", false);
     }
 
     public bool CheckAnomaly()
