@@ -571,7 +571,9 @@ Transform:
   m_LocalPosition: {x: -8.41569, y: 0, z: -6.48964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1714009052}
+  - {fileID: 1726872719}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &957157838 stripped
@@ -791,15 +793,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 940401110}
     m_Modifications:
     - target: {fileID: 3760042048155162875, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: m_Name
-      value: Wall_Stretch_Trigger
+      value: Wall_Stretch_Trigger_L
       objectReference: {fileID: 0}
     - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.24
+      value: -10.824309
       objectReference: {fileID: 0}
     - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: m_LocalPosition.y
@@ -807,7 +809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.54
+      value: 26.02964
       objectReference: {fileID: 0}
     - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: m_LocalRotation.w
@@ -850,29 +852,37 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: invertDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: textureTilingAxis
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: corridorEndSection
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1933155835}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: floorsToStretch.Array.size
-      value: 6
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: textureRepeatEveryWorldUnit
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: 'floorsToStretch.Array.data[0]'
       value: 
-      objectReference: {fileID: 247994530}
+      objectReference: {fileID: 1005661816}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: 'floorsToStretch.Array.data[1]'
       value: 
-      objectReference: {fileID: 702895785}
+      objectReference: {fileID: 746680677}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: 'floorsToStretch.Array.data[2]'
       value: 
-      objectReference: {fileID: 505912459}
+      objectReference: {fileID: 202861659}
     - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
       propertyPath: 'floorsToStretch.Array.data[3]'
       value: 
@@ -918,6 +928,135 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25118d516b6e1cc48a290e56d65c9244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyDetector
+--- !u!1001 &1566652012
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 940401110}
+    m_Modifications:
+    - target: {fileID: 3760042048155162875, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_Name
+      value: Wall_Stretch_Trigger_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.824309
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.02964
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000055581327
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 179.999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1440684824}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: moveAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: floorScaleAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: invertDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: textureTilingAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: corridorEndSection
+      value: 
+      objectReference: {fileID: 1933155835}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: floorsToStretch.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: textureRepeatEveryWorldUnit
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[0]'
+      value: 
+      objectReference: {fileID: 247994530}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[1]'
+      value: 
+      objectReference: {fileID: 702895785}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[2]'
+      value: 
+      objectReference: {fileID: 505912459}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1005661816}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[4]'
+      value: 
+      objectReference: {fileID: 746680677}
+    - target: {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: 'floorsToStretch.Array.data[5]'
+      value: 
+      objectReference: {fileID: 202861659}
+    - target: {fileID: 8955956634798008745, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_Size.z
+      value: 7.652126
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955956634798008745, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_Center.x
+      value: -0.59954643
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955956634798008745, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      propertyPath: m_Center.z
+      value: 0.7027047
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6316242225997416917, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3760042048155162875, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1726872722}
+  m_SourcePrefab: {fileID: 100100000, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
 --- !u!1001 &1612488947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1168,6 +1307,47 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88b90659c07e57b42a3efe1f7a3adb59, type: 3}
+--- !u!4 &1714009052 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+  m_PrefabInstance: {fileID: 1243264347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1726872718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3760042048155162875, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+  m_PrefabInstance: {fileID: 1566652012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1726872719 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6136822231846863581, guid: 2dcba69120f58a646b7bc55d3ae7be19, type: 3}
+  m_PrefabInstance: {fileID: 1566652012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1726872722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726872718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559f8629bf1d5df4f8889742d6a2928e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallStretch
+  player: {fileID: 1440684824}
+  corridorEndSection: {fileID: 1933155835}
+  floorsToStretch:
+  - {fileID: 247994530}
+  - {fileID: 702895785}
+  - {fileID: 505912459}
+  moveAxis: 0
+  invertDirection: 1
+  floorScaleAxis: 0
+  textureTilingAxis: 0
+  maxStretchDistance: 100
+  followSpeed: 20
+  textureRepeatEveryWorldUnit: 2
+  showDebugLogs: 1
 --- !u!4 &1933155835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6889998127752399010, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
@@ -1250,6 +1430,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4459063542575184911, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8ed9fcc8176b2f74fa82b8fd3a3dc85a, type: 2}
     - target: {fileID: 6675700666621936135, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8
@@ -1305,11 +1489,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 4613073162167920977}
   - {fileID: 1075209062}
+  - {fileID: 4613073162167920977}
   - {fileID: 2012263424}
   - {fileID: 1621112084}
-  - {fileID: 1243264347}
   - {fileID: 940401110}
   - {fileID: 863937559}
   - {fileID: 107046101}
