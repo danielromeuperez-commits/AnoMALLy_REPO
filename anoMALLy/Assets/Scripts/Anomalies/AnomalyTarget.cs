@@ -29,6 +29,17 @@ public class AnomalyTarget : MonoBehaviour
     [Header("Eventos Opcionales")]
     [SerializeField] UnityEvent onFixed;
 
+    [Header("Audio SFX")]
+    [SerializeField] bool playCorrectSFX = true;
+    [SerializeField] int correctSFXIndex = 0;
+
+    [SerializeField] bool playWrongSFX = true;
+    [SerializeField] int wrongSFXIndex = 1;
+
+    [Header("Resaltado de borde")]
+    [SerializeField] bool useOutline = true;
+    [SerializeField] AnomalyOutline anomalyOutline;
+
     [Header("Sound Anomaly")]
     [SerializeField] AudioSource audioSource;
     [SerializeField] float pitchAnomaly = -1f;
@@ -36,7 +47,6 @@ public class AnomalyTarget : MonoBehaviour
 
     private void Awake()
     {
-        // Auto-detectar tipo por tag
         switch (gameObject.tag)
         {
             case "sound_anomaly":
@@ -70,6 +80,8 @@ public class AnomalyTarget : MonoBehaviour
                 audioSource.pitch = pitchAnomaly;
             }
         }
+
+        SetupOutline();
     }
 
     private void Start()
@@ -78,6 +90,39 @@ public class AnomalyTarget : MonoBehaviour
         {
             objetoCorregido.SetActive(false);
         }
+    }
+
+    void SetupOutline()
+    {
+        if (!useOutline) return;
+
+        if (anomalyOutline == null)
+        {
+            anomalyOutline = GetComponent<AnomalyOutline>();
+        }
+
+        if (anomalyOutline == null)
+        {
+            anomalyOutline = gameObject.AddComponent<AnomalyOutline>();
+        }
+
+        anomalyOutline.SetVisible(false);
+    }
+
+    public void StartHighlight()
+    {
+        if (!useOutline) return;
+        if (isFixed) return;
+        if (anomalyOutline == null) return;
+
+        anomalyOutline.SetVisible(true);
+    }
+
+    public void StopHighlight()
+    {
+        if (anomalyOutline == null) return;
+
+        anomalyOutline.SetVisible(false);
     }
 
     public void SetDetectionProgress(float progress)
@@ -90,9 +135,16 @@ public class AnomalyTarget : MonoBehaviour
     {
         if (isFixed) return;
 
+        StopHighlight();
+
         isFixed = true;
 
         Debug.Log("Anomalía corregida: " + gameObject.name);
+
+        if (playCorrectSFX && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(correctSFXIndex);
+        }
 
         switch (tipo)
         {
@@ -129,6 +181,16 @@ public class AnomalyTarget : MonoBehaviour
         else
         {
             Debug.LogWarning("No hay AnomalyManager asignado en: " + gameObject.name);
+        }
+    }
+
+    public void PlayWrongSFX()
+    {
+        if (!playWrongSFX) return;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(wrongSFXIndex);
         }
     }
 }
