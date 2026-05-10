@@ -9,6 +9,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: M_PaintedWall
     second: {fileID: 2100000, guid: cc83952877c69d443b498017035e9c3d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Tiles
+    second: {fileID: 2100000, guid: c624d89bb88ffcf43a9e3513ef1a2073, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Trim
+    second: {fileID: 2100000, guid: 0064410e349409f41bf23f75f7e391b5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
