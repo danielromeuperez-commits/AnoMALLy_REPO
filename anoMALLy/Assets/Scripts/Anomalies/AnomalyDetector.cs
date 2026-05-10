@@ -16,6 +16,8 @@ public class AnomalyDetector : MonoBehaviour
 
     [Header("Detección")]
     [SerializeField] float timeToFix = 2f;
+    public float TimeToFix => timeToFix;
+    public float CurrentFixTime => currentFixTime;
     [SerializeField] bool resetProgressWhenNotLooking = true;
 
     [Header("Resaltado")]
