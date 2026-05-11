@@ -43,6 +43,10 @@ public class WallStretch : MonoBehaviour
     [Header("Eje del tiling")]
     [SerializeField] TextureAxis textureTilingAxis = TextureAxis.X;
 
+    [Header("Corrección de tiling")]
+    [SerializeField] bool invertTextureTiling = false;
+    [SerializeField] bool tileFromEnd = true;
+
     [Header("Estirado")]
     [SerializeField] float maxStretchDistance = 100f;
     [SerializeField] float followSpeed = 20f;
@@ -333,8 +337,6 @@ public class WallStretch : MonoBehaviour
 
     void UpdateTiling(int index, float currentWorldLength)
     {
-        if (stretchDisabled) return;
-
         if (floorMaterials == null) return;
         if (index < 0 || index >= floorMaterials.Length) return;
         if (floorMaterials[index] == null) return;
@@ -346,14 +348,18 @@ public class WallStretch : MonoBehaviour
 
         if (textureTilingAxis == TextureAxis.X)
         {
+            // Tiling invertido
             tiling.x = -repeatAmount;
             tiling.y = 1f;
+
+            // Compensación visual
             offset.x = repeatAmount;
         }
         else
         {
             tiling.x = 1f;
             tiling.y = -repeatAmount;
+
             offset.y = repeatAmount;
         }
 
@@ -368,6 +374,7 @@ public class WallStretch : MonoBehaviour
             floorMaterials[index].SetTextureOffset("_MainTex", offset);
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
