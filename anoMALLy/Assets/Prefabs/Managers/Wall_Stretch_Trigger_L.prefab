@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1799903212912294968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878328145997645088}
+  - component: {fileID: 6777790926770184821}
+  - component: {fileID: 515995946147821972}
+  m_Layer: 0
+  m_Name: Wall_Stretch_Trigger_L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &878328145997645088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799903212912294968}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000055581327}
+  m_LocalPosition: {x: -10.824309, y: 0, z: 26.02964}
+  m_LocalScale: {x: -0.45127293, y: 0.6396439, z: 1.0726379}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 179.999, z: 0}
+--- !u!65 &6777790926770184821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799903212912294968}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.9571896, y: 2.5464709, z: 7.652126}
+  m_Center: {x: -0.59954643, y: 0.35572278, z: 0.7027047}
+--- !u!114 &515995946147821972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799903212912294968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ca07175aab1af488a56a7dc2a3086a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorStretchSimple
+  player: {fileID: 0}
+  anomalyManager: {fileID: 0}
+  corridorEndSection: {fileID: 0}
+  floorsToStretch:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  moveAxis: 0
+  invertDirection: 1
+  floorScaleAxis: 0
+  textureTilingAxis: 0
+  maxStretchDistance: 1000000
+  followSpeed: 20
+  textureRepeatEveryWorldUnit: 2
+  corridorMoveLoopSource: {fileID: 0}
+  movementSoundMinDelta: 0.02
+  movementSoundVolume: 0.35
+  soundFadeSpeed: 8
+  stopAfterNoMovementTime: 0.15
+  minPlayTime: 0.3
+  showDebugLogs: 1
