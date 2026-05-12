@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WallStretch : MonoBehaviour
+public class CeilingStretchSimple : MonoBehaviour
 {
     public enum WorldAxis
     {
@@ -30,15 +30,15 @@ public class WallStretch : MonoBehaviour
     [Header("Zona final que se aleja")]
     [SerializeField] Transform corridorEndSection;
 
-    [Header("Paredes que se estiran")]
-    [SerializeField] Transform[] floorsToStretch;
+    [Header("Techos que se estiran")]
+    [SerializeField] Transform[] ceilingsToStretch;
 
     [Header("Dirección hacia delante")]
     [SerializeField] WorldAxis moveAxis = WorldAxis.X;
     [SerializeField] bool invertDirection = true;
 
-    [Header("Eje que escala la pared")]
-    [SerializeField] LocalScaleAxis floorScaleAxis = LocalScaleAxis.X;
+    [Header("Eje que escala el techo")]
+    [SerializeField] LocalScaleAxis ceilingScaleAxis = LocalScaleAxis.X;
 
     [Header("Eje del tiling")]
     [SerializeField] TextureAxis textureTilingAxis = TextureAxis.X;
@@ -63,11 +63,11 @@ public class WallStretch : MonoBehaviour
     Vector3 triggerStartPosition;
     Vector3 corridorEndStartPosition;
 
-    Vector3[] floorStartScales;
-    Vector3[] floorStartPositions;
+    Vector3[] ceilingStartScales;
+    Vector3[] ceilingStartPositions;
     Vector3[] fixedBackEdges;
-    float[] floorStartWorldLengths;
-    Material[] floorMaterials;
+    float[] ceilingStartWorldLengths;
+    Material[] ceilingMaterials;
     Vector2[] originalTiling;
     Vector2[] originalOffset;
 
@@ -85,9 +85,9 @@ public class WallStretch : MonoBehaviour
             corridorEndStartPosition = corridorEndSection.position;
         }
 
-        SetupFloors();
+        SetupCeilings();
 
-        UpdateFloors(0f);
+        UpdateCeilings(0f);
         UpdateEndSection(0f);
     }
 
@@ -105,7 +105,7 @@ public class WallStretch : MonoBehaviour
         stretchAmount = Mathf.Clamp(stretchAmount, 0f, maxStretchDistance);
 
         MoveTrigger(stretchAmount);
-        UpdateFloors(stretchAmount);
+        UpdateCeilings(stretchAmount);
         UpdateEndSection(stretchAmount);
     }
 
@@ -123,73 +123,55 @@ public class WallStretch : MonoBehaviour
             corridorEndSection.position = corridorEndStartPosition;
         }
 
-        RestoreOriginalWalls();
+        RestoreOriginalCeilings();
 
         if (showDebugLogs)
         {
-            Debug.Log(gameObject.name + ": todas las anomalías corregidas. Las paredes ya no se alejan.");
+            Debug.Log(gameObject.name + ": todas las anomalías corregidas. El techo ya no se estira.");
         }
     }
 
-    void RestoreOriginalWalls()
+    void RestoreOriginalCeilings()
     {
-        for (int i = 0; i < floorsToStretch.Length; i++)
+        for (int i = 0; i < ceilingsToStretch.Length; i++)
         {
-            if (floorsToStretch[i] == null) continue;
+            if (ceilingsToStretch[i] == null) continue;
 
-            floorsToStretch[i].localScale = floorStartScales[i];
-            floorsToStretch[i].position = floorStartPositions[i];
+            ceilingsToStretch[i].localScale = ceilingStartScales[i];
+            ceilingsToStretch[i].position = ceilingStartPositions[i];
 
             RestoreOriginalTiling(i);
         }
     }
 
-    void RestoreOriginalTiling(int index)
+    void SetupCeilings()
     {
-        if (floorMaterials == null) return;
-        if (index < 0 || index >= floorMaterials.Length) return;
-        if (floorMaterials[index] == null) return;
-
-        if (floorMaterials[index].HasProperty("_BaseMap"))
-        {
-            floorMaterials[index].SetTextureScale("_BaseMap", originalTiling[index]);
-            floorMaterials[index].SetTextureOffset("_BaseMap", originalOffset[index]);
-        }
-        else if (floorMaterials[index].HasProperty("_MainTex"))
-        {
-            floorMaterials[index].SetTextureScale("_MainTex", originalTiling[index]);
-            floorMaterials[index].SetTextureOffset("_MainTex", originalOffset[index]);
-        }
-    }
-
-    void SetupFloors()
-    {
-        floorStartScales = new Vector3[floorsToStretch.Length];
-        floorStartPositions = new Vector3[floorsToStretch.Length];
-        fixedBackEdges = new Vector3[floorsToStretch.Length];
-        floorStartWorldLengths = new float[floorsToStretch.Length];
-        floorMaterials = new Material[floorsToStretch.Length];
-        originalTiling = new Vector2[floorsToStretch.Length];
-        originalOffset = new Vector2[floorsToStretch.Length];
+        ceilingStartScales = new Vector3[ceilingsToStretch.Length];
+        ceilingStartPositions = new Vector3[ceilingsToStretch.Length];
+        fixedBackEdges = new Vector3[ceilingsToStretch.Length];
+        ceilingStartWorldLengths = new float[ceilingsToStretch.Length];
+        ceilingMaterials = new Material[ceilingsToStretch.Length];
+        originalTiling = new Vector2[ceilingsToStretch.Length];
+        originalOffset = new Vector2[ceilingsToStretch.Length];
 
         Vector3 direction = GetForwardDirection();
 
-        for (int i = 0; i < floorsToStretch.Length; i++)
+        for (int i = 0; i < ceilingsToStretch.Length; i++)
         {
-            if (floorsToStretch[i] == null) continue;
+            if (ceilingsToStretch[i] == null) continue;
 
-            floorStartScales[i] = floorsToStretch[i].localScale;
-            floorStartPositions[i] = floorsToStretch[i].position;
+            ceilingStartScales[i] = ceilingsToStretch[i].localScale;
+            ceilingStartPositions[i] = ceilingsToStretch[i].position;
 
-            Renderer rend = floorsToStretch[i].GetComponent<Renderer>();
+            Renderer rend = ceilingsToStretch[i].GetComponent<Renderer>();
 
             if (rend == null)
             {
-                Debug.LogWarning("La pared no tiene Renderer: " + floorsToStretch[i].name);
+                Debug.LogWarning("El techo no tiene Renderer: " + ceilingsToStretch[i].name);
                 continue;
             }
 
-            floorMaterials[i] = rend.material;
+            ceilingMaterials[i] = rend.material;
 
             SaveOriginalTiling(i);
 
@@ -197,7 +179,7 @@ public class WallStretch : MonoBehaviour
 
             float length = GetBoundsLength(bounds);
 
-            floorStartWorldLengths[i] = Mathf.Max(0.01f, length);
+            ceilingStartWorldLengths[i] = Mathf.Max(0.01f, length);
 
             fixedBackEdges[i] = GetBackEdge(bounds, direction);
         }
@@ -205,22 +187,40 @@ public class WallStretch : MonoBehaviour
 
     void SaveOriginalTiling(int index)
     {
-        if (floorMaterials[index] == null) return;
+        if (ceilingMaterials[index] == null) return;
 
-        if (floorMaterials[index].HasProperty("_BaseMap"))
+        if (ceilingMaterials[index].HasProperty("_BaseMap"))
         {
-            originalTiling[index] = floorMaterials[index].GetTextureScale("_BaseMap");
-            originalOffset[index] = floorMaterials[index].GetTextureOffset("_BaseMap");
+            originalTiling[index] = ceilingMaterials[index].GetTextureScale("_BaseMap");
+            originalOffset[index] = ceilingMaterials[index].GetTextureOffset("_BaseMap");
         }
-        else if (floorMaterials[index].HasProperty("_MainTex"))
+        else if (ceilingMaterials[index].HasProperty("_MainTex"))
         {
-            originalTiling[index] = floorMaterials[index].GetTextureScale("_MainTex");
-            originalOffset[index] = floorMaterials[index].GetTextureOffset("_MainTex");
+            originalTiling[index] = ceilingMaterials[index].GetTextureScale("_MainTex");
+            originalOffset[index] = ceilingMaterials[index].GetTextureOffset("_MainTex");
         }
         else
         {
             originalTiling[index] = Vector2.one;
             originalOffset[index] = Vector2.zero;
+        }
+    }
+
+    void RestoreOriginalTiling(int index)
+    {
+        if (ceilingMaterials == null) return;
+        if (index < 0 || index >= ceilingMaterials.Length) return;
+        if (ceilingMaterials[index] == null) return;
+
+        if (ceilingMaterials[index].HasProperty("_BaseMap"))
+        {
+            ceilingMaterials[index].SetTextureScale("_BaseMap", originalTiling[index]);
+            ceilingMaterials[index].SetTextureOffset("_BaseMap", originalOffset[index]);
+        }
+        else if (ceilingMaterials[index].HasProperty("_MainTex"))
+        {
+            ceilingMaterials[index].SetTextureScale("_MainTex", originalTiling[index]);
+            ceilingMaterials[index].SetTextureOffset("_MainTex", originalOffset[index]);
         }
     }
 
@@ -268,51 +268,48 @@ public class WallStretch : MonoBehaviour
         corridorEndSection.position = corridorEndStartPosition + direction * stretchAmount;
     }
 
-    void UpdateFloors(float stretchAmount)
+    void UpdateCeilings(float stretchAmount)
     {
         if (stretchDisabled) return;
 
         Vector3 direction = GetForwardDirection();
 
-        for (int i = 0; i < floorsToStretch.Length; i++)
+        for (int i = 0; i < ceilingsToStretch.Length; i++)
         {
-            if (floorsToStretch[i] == null) continue;
+            if (ceilingsToStretch[i] == null) continue;
 
-            Renderer rend = floorsToStretch[i].GetComponent<Renderer>();
+            Renderer rend = ceilingsToStretch[i].GetComponent<Renderer>();
             if (rend == null) continue;
 
-            float originalLength = Mathf.Max(0.01f, floorStartWorldLengths[i]);
+            float originalLength = Mathf.Max(0.01f, ceilingStartWorldLengths[i]);
             float newLength = originalLength + stretchAmount;
             float scaleMultiplier = newLength / originalLength;
 
-            Vector3 newScale = floorStartScales[i];
+            Vector3 newScale = ceilingStartScales[i];
 
-            switch (floorScaleAxis)
+            switch (ceilingScaleAxis)
             {
                 case LocalScaleAxis.X:
-                    newScale.x = floorStartScales[i].x * scaleMultiplier;
+                    newScale.x = ceilingStartScales[i].x * scaleMultiplier;
                     break;
 
                 case LocalScaleAxis.Y:
-                    newScale.y = floorStartScales[i].y * scaleMultiplier;
+                    newScale.y = ceilingStartScales[i].y * scaleMultiplier;
                     break;
 
                 case LocalScaleAxis.Z:
-                    newScale.z = floorStartScales[i].z * scaleMultiplier;
+                    newScale.z = ceilingStartScales[i].z * scaleMultiplier;
                     break;
             }
 
-            // 1. Escalamos la pared.
-            floorsToStretch[i].localScale = newScale;
+            ceilingsToStretch[i].localScale = newScale;
 
-            // 2. Calculamos dónde está ahora el borde trasero.
             Bounds newBounds = rend.bounds;
             Vector3 currentBackEdge = GetBackEdge(newBounds, direction);
 
-            // 3. Corregimos la posición para que ese borde se quede fijo.
             Vector3 correction = fixedBackEdges[i] - currentBackEdge;
 
-            floorsToStretch[i].position += correction;
+            ceilingsToStretch[i].position += correction;
 
             UpdateTiling(i, newLength);
         }
@@ -342,9 +339,9 @@ public class WallStretch : MonoBehaviour
     {
         if (stretchDisabled) return;
 
-        if (floorMaterials == null) return;
-        if (index < 0 || index >= floorMaterials.Length) return;
-        if (floorMaterials[index] == null) return;
+        if (ceilingMaterials == null) return;
+        if (index < 0 || index >= ceilingMaterials.Length) return;
+        if (ceilingMaterials[index] == null) return;
 
         float repeatAmount = currentWorldLength / textureRepeatEveryWorldUnit;
 
@@ -365,15 +362,15 @@ public class WallStretch : MonoBehaviour
             offset.y = finalOffsetAmount;
         }
 
-        if (floorMaterials[index].HasProperty("_BaseMap"))
+        if (ceilingMaterials[index].HasProperty("_BaseMap"))
         {
-            floorMaterials[index].SetTextureScale("_BaseMap", tiling);
-            floorMaterials[index].SetTextureOffset("_BaseMap", offset);
+            ceilingMaterials[index].SetTextureScale("_BaseMap", tiling);
+            ceilingMaterials[index].SetTextureOffset("_BaseMap", offset);
         }
-        else if (floorMaterials[index].HasProperty("_MainTex"))
+        else if (ceilingMaterials[index].HasProperty("_MainTex"))
         {
-            floorMaterials[index].SetTextureScale("_MainTex", tiling);
-            floorMaterials[index].SetTextureOffset("_MainTex", offset);
+            ceilingMaterials[index].SetTextureScale("_MainTex", tiling);
+            ceilingMaterials[index].SetTextureOffset("_MainTex", offset);
         }
     }
 
@@ -385,7 +382,7 @@ public class WallStretch : MonoBehaviour
         isActive = true;
 
         if (showDebugLogs)
-            Debug.Log("Player tocó WallStretch. La pared empieza a seguirlo.");
+            Debug.Log("Player tocó CeilingStretchSimple. El techo empieza a estirarse.");
     }
 
     private void OnTriggerStay(Collider other)
