@@ -6,7 +6,7 @@ using TMPro;
 public class SceneLoader : MonoBehaviour
 {
     [Header("Escena a cargar después")]
-    [SerializeField] string sceneName = "Main Menu";
+    [SerializeField] string sceneName = "MainMenu";
 
     [Header("Player")]
     [SerializeField] Transform player;
@@ -77,12 +77,17 @@ public class SceneLoader : MonoBehaviour
         {
             whiteFadeCanvasGroup.alpha = 0f;
             whiteFadeCanvasGroup.gameObject.SetActive(true);
+            whiteFadeCanvasGroup.blocksRaycasts = false;
+            whiteFadeCanvasGroup.interactable = false;
         }
 
+        // IMPORTANTE:
+        // NO ponemos blackFadeCanvasGroup.alpha = 0 aquí.
+        // Si lo hacemos, rompemos el fade inicial de GameplayFadeIn.
         if (blackFadeCanvasGroup != null)
         {
-            blackFadeCanvasGroup.alpha = 0f;
-            blackFadeCanvasGroup.gameObject.SetActive(true);
+            blackFadeCanvasGroup.blocksRaycasts = false;
+            blackFadeCanvasGroup.interactable = false;
         }
 
         if (finalText != null)
@@ -98,9 +103,6 @@ public class SceneLoader : MonoBehaviour
         if (finalSequenceStarted) return;
         if (player == null) return;
 
-        // CLAVE:
-        // Si todavía NO has arreglado todas las anomalías,
-        // no se activa ni el fade blanco ni la ralentización.
         if (requireAllAnomaliesFixed)
         {
             if (anomalyManager == null) return;
@@ -198,10 +200,25 @@ public class SceneLoader : MonoBehaviour
             yield return new WaitForSecondsRealtime(secondsShowingText);
         }
 
-        yield return StartCoroutine(FadeCanvasGroupUnscaled(blackFadeCanvasGroup, 0f, 1f, blackFadeDuration));
+        if (blackFadeCanvasGroup != null)
+        {
+            blackFadeCanvasGroup.gameObject.SetActive(true);
+            blackFadeCanvasGroup.blocksRaycasts = true;
+            blackFadeCanvasGroup.interactable = false;
+
+            yield return StartCoroutine(FadeCanvasGroupUnscaled(
+                blackFadeCanvasGroup,
+                blackFadeCanvasGroup.alpha,
+                1f,
+                blackFadeDuration
+            ));
+        }
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         if (!string.IsNullOrEmpty(sceneName))
         {
@@ -249,7 +266,9 @@ public class SceneLoader : MonoBehaviour
         while (timer < duration)
         {
             timer += Time.unscaledDeltaTime;
-            float t = timer / duration;
+            float t = Mathf.Clamp01(timer / duration);
+
+            t = Mathf.SmoothStep(0f, 1f, t);
 
             canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
 
@@ -269,7 +288,9 @@ public class SceneLoader : MonoBehaviour
         while (timer < duration)
         {
             timer += Time.unscaledDeltaTime;
-            float t = timer / duration;
+            float t = Mathf.Clamp01(timer / duration);
+
+            t = Mathf.SmoothStep(0f, 1f, t);
 
             finalText.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
 

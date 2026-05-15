@@ -13785,7 +13785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 0.977
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21537,6 +21537,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 260327880142302748, guid: a5a20455c5411584cb998250045990ad, type: 3}
   m_PrefabInstance: {fileID: 1535354282}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1537315530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537315532}
+  - component: {fileID: 1537315531}
+  m_Layer: 0
+  m_Name: GameplayFademanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1537315531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537315530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13220ad9524d25645a2f33eb0601d92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameplayFadeIn
+  blackFadeCanvasGroup: {fileID: 1953925874}
+  blackFadeImage: {fileID: 979304008}
+  fadeOutDuration: 5
+  useSmoothFade: 1
+  lockCursorOnStart: 1
+--- !u!4 &1537315532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537315530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.98001, y: 0.88356, z: 20.95489}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1540313124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25667,7 +25716,7 @@ MonoBehaviour:
   - {fileID: 1715882737}
   anomalyManager: {fileID: 186586351}
   requireAllAnomaliesFixed: 1
-  startEffectDistance: 8
+  startEffectDistance: 6
   completeEffectDistance: 1.5
   normalTimeScale: 1
   minimumTimeScale: 0.08
@@ -27771,7 +27820,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 999
   m_TargetDisplay: 0
 --- !u!224 &1953925878
 RectTransform:
@@ -31727,6 +31776,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1075209062}
+  - {fileID: 1537315532}
   - {fileID: 4613073162167920977}
   - {fileID: 1408150908}
   - {fileID: 375970322}
