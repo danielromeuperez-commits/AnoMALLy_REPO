@@ -67,6 +67,17 @@ public class PlayerController : MonoBehaviour
         if (!value)
         {
             rb.linearVelocity = Vector3.zero;
+            MoveInput = Vector2.zero;
+            lookInput = Vector2.zero;
+
+            animator.SetBool("Point", false);
+            animator.SetFloat("Speed", 0);
+
+            animator.speed = 0f;
+        }
+        else
+        {
+            animator.speed = 1f;
         }
     }
 
