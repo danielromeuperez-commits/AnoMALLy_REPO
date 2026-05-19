@@ -48,13 +48,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: -7918335002988649766, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3312da83f47f311409264135b0b500f2, type: 2}
+    - target: {fileID: -7174424671602191969, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -7029948723529949830, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
       propertyPath: m_Name
       value: Marco_Porta 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: df9b93e9f667a054aa69823b513838fd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
