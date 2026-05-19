@@ -30,6 +30,9 @@ public class DoorStretchSimple : MonoBehaviour
     [Header("Zona final que se aleja")]
     [SerializeField] Transform corridorEndSection;
 
+    [Header("Objetos extra que siguen a la puerta")]
+    [SerializeField] Transform[] extraEndSectionsToMove;
+
     [Header("Suelos que se estiran")]
     [SerializeField] Transform[] floorsToStretch;
 
@@ -70,6 +73,8 @@ public class DoorStretchSimple : MonoBehaviour
     Vector3 triggerStartPosition;
     Vector3 corridorEndStartPosition;
 
+    Vector3[] extraEndSectionStartPositions;
+
     Vector3[] floorStartScales;
     Vector3[] fixedBackEdges;
     float[] floorStartWorldLengths;
@@ -89,6 +94,8 @@ public class DoorStretchSimple : MonoBehaviour
             corridorEndStartPosition = corridorEndSection.position;
         }
 
+        SetupExtraEndSections();
+
         SetupAudio();
 
         SetupFloors();
@@ -107,8 +114,6 @@ public class DoorStretchSimple : MonoBehaviour
             return;
         }
 
-        // Si ya están todas las anomalías corregidas,
-        // la puerta deja de alejarse y vuelve a su posición normal.
         if (anomalyManager != null && anomalyManager.AllAnomaliesFixed)
         {
             float stretchAmount = 0f;
@@ -136,6 +141,18 @@ public class DoorStretchSimple : MonoBehaviour
         UpdateEndSection(currentStretchAmount);
 
         lastStretchAmount = currentStretchAmount;
+    }
+
+    void SetupExtraEndSections()
+    {
+        extraEndSectionStartPositions = new Vector3[extraEndSectionsToMove.Length];
+
+        for (int i = 0; i < extraEndSectionsToMove.Length; i++)
+        {
+            if (extraEndSectionsToMove[i] == null) continue;
+
+            extraEndSectionStartPositions[i] = extraEndSectionsToMove[i].position;
+        }
     }
 
     void SetupAudio()
@@ -268,11 +285,19 @@ public class DoorStretchSimple : MonoBehaviour
 
     void UpdateEndSection(float stretchAmount)
     {
-        if (corridorEndSection == null) return;
-
         Vector3 direction = GetForwardDirection();
 
-        corridorEndSection.position = corridorEndStartPosition + direction * stretchAmount;
+        if (corridorEndSection != null)
+        {
+            corridorEndSection.position = corridorEndStartPosition + direction * stretchAmount;
+        }
+
+        for (int i = 0; i < extraEndSectionsToMove.Length; i++)
+        {
+            if (extraEndSectionsToMove[i] == null) continue;
+
+            extraEndSectionsToMove[i].position = extraEndSectionStartPositions[i] + direction * stretchAmount;
+        }
     }
 
     void UpdateFloors(float stretchAmount)

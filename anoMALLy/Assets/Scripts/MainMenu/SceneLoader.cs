@@ -21,8 +21,8 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] bool requireAllAnomaliesFixed = true;
 
     [Header("Distancias")]
-    [Tooltip("A esta distancia empieza el fade blanco y la ralentización.")]
-    [SerializeField] float startEffectDistance = 8f;
+    [Tooltip("A esta distancia empieza la zona del efecto.")]
+    [SerializeField] float startEffectDistance = 6f;
 
     [Tooltip("A esta distancia el fade blanco llega al 100% y el jugador queda congelado.")]
     [SerializeField] float completeEffectDistance = 1.5f;
@@ -36,6 +36,12 @@ public class SceneLoader : MonoBehaviour
 
     [Header("Fade blanco")]
     [SerializeField] CanvasGroup whiteFadeCanvasGroup;
+
+    [Tooltip("Cuánto tiene que avanzar el jugador dentro de la zona antes de que empiece a notarse el blanco. Más alto = empieza más tarde.")]
+    [SerializeField, Range(0f, 0.95f)] float whiteFadeStartProgress = 0.35f;
+
+    [Tooltip("Suavidad del fade blanco. Más alto = tarda más en notarse al principio.")]
+    [SerializeField, Range(1f, 5f)] float whiteFadeSoftness = 2.5f;
 
     [Header("Texto final")]
     [SerializeField] TMP_Text finalText;
@@ -81,9 +87,7 @@ public class SceneLoader : MonoBehaviour
             whiteFadeCanvasGroup.interactable = false;
         }
 
-        // IMPORTANTE:
-        // NO ponemos blackFadeCanvasGroup.alpha = 0 aquí.
-        // Si lo hacemos, rompemos el fade inicial de GameplayFadeIn.
+        // No tocamos el alpha del negro aquí para no romper el fade inicial del gameplay.
         if (blackFadeCanvasGroup != null)
         {
             blackFadeCanvasGroup.blocksRaycasts = false;
@@ -145,7 +149,17 @@ public class SceneLoader : MonoBehaviour
     {
         if (whiteFadeCanvasGroup == null) return;
 
-        whiteFadeCanvasGroup.alpha = progress;
+        // Esto hace que el fade blanco tarde más en empezar.
+        float delayedProgress = Mathf.InverseLerp(whiteFadeStartProgress, 1f, progress);
+        delayedProgress = Mathf.Clamp01(delayedProgress);
+
+        // Suavizado para que no entre de golpe.
+        delayedProgress = Mathf.SmoothStep(0f, 1f, delayedProgress);
+
+        // Cuanto mayor sea whiteFadeSoftness, menos se nota al principio.
+        delayedProgress = Mathf.Pow(delayedProgress, whiteFadeSoftness);
+
+        whiteFadeCanvasGroup.alpha = delayedProgress;
     }
 
     void ApplySlowMotion(float progress)
