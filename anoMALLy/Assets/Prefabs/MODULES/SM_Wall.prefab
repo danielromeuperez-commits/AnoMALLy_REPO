@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -7174424671602191969, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
       propertyPath: m_Name
       value: SM_Wall
@@ -60,13 +64,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1789143179089556674, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1789143179089556674, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5016098732401183939, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016098732401183939, guid: 5bc8afcfb3afd044ebae78d4687f4791, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
