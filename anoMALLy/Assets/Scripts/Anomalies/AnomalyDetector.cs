@@ -66,69 +66,73 @@ public class AnomalyDetector : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * detectionDistance, Color.red);
         }
 
-        if (Physics.Raycast(ray, out RaycastHit hit, detectionDistance, anomalyLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, detectionDistance))
         {
-            AnomalyTarget anomaly = hit.collider.GetComponentInParent<AnomalyTarget>();
-
-            if (anomaly != null && !anomaly.IsFixed)
+            // ¿El objeto golpeado pertenece a anomalyLayer?
+            if (((1 << hit.collider.gameObject.layer) & anomalyLayer) != 0)
             {
-                if (currentAnomaly != anomaly)
+                AnomalyTarget anomaly = hit.collider.GetComponentInParent<AnomalyTarget>();
+
+                if (anomaly != null && !anomaly.IsFixed)
                 {
-                    if (currentAnomaly != null)
+                    if (currentAnomaly != anomaly)
                     {
-                        currentAnomaly.StopHighlight();
+                        if (currentAnomaly != null)
+                        {
+                            currentAnomaly.StopHighlight();
+                        }
+
+                        currentAnomaly = anomaly;
+                        currentFixTime = 0f;
+                        highlightShown = false;
+
+                        Debug.Log("Detectando: " + anomaly.gameObject.name);
                     }
 
-                    currentAnomaly = anomaly;
-                    currentFixTime = 0f;
-                    highlightShown = false;
+                    currentFixTime += Time.deltaTime;
 
-                    Debug.Log("Detectando: " + anomaly.gameObject.name);
+                    float progress = currentFixTime / timeToFix;
+                    currentAnomaly.SetDetectionProgress(progress);
+
+                    if (!highlightShown && currentFixTime >= timeToShowHighlight)
+                    {
+                        currentAnomaly.StartHighlight();
+                        highlightShown = true;
+                    }
+
+                    if (currentFixTime >= timeToFix && !esperandoRespuesta)
+                    {
+                        MostrarMenu();
+                    }
+
+                    return;
                 }
-
-                currentFixTime += Time.deltaTime;
-
-                float progress = currentFixTime / timeToFix;
-                currentAnomaly.SetDetectionProgress(progress);
-
-                // El borde aparece solo si llevas manteniendo pulsado 1 segundo sobre el mismo objeto.
-                if (!highlightShown && currentFixTime >= timeToShowHighlight)
-                {
-                    currentAnomaly.StartHighlight();
-                    highlightShown = true;
-                }
-
-                if (currentFixTime >= timeToFix && !esperandoRespuesta)
-                {
-                    MostrarMenu();
-                }
-
-                return;
             }
         }
 
+        // Si no está mirando una anomalía válida
         if (resetProgressWhenNotLooking)
         {
             ResetDetection();
         }
-    }
 
-    void MostrarMenu()
-    {
-        esperandoRespuesta = true;
-
-        if (currentAnomaly != null)
+        void MostrarMenu()
         {
-            currentAnomaly.StopHighlight();
+            esperandoRespuesta = true;
+
+            if (currentAnomaly != null)
+            {
+                currentAnomaly.StopHighlight();
+            }
+
+            menuUI.SetActive(true);
+
+            Time.timeScale = 0f;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            playerController.SetControls(false);
         }
-
-        menuUI.SetActive(true);
-
-        Time.timeScale = 0f;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        playerController.SetControls(false);
     }
 
     public void ElegirAnomalia(int tipoElegido)
