@@ -36,6 +36,11 @@ public class AnomalyTarget : MonoBehaviour
     [SerializeField] bool playWrongSFX = true;
     [SerializeField] int wrongSFXIndex = 1;
 
+    [Header("Audio ambiente / estática")]
+    [SerializeField] bool playAmbientAudioOnStart = false;
+    [SerializeField] bool stopAmbientAudioOnFixed = true;
+    [SerializeField] AudioSource ambientAudioSource;
+
     [Header("Resaltado de borde")]
     [SerializeField] bool useOutline = true;
     [SerializeField] AnomalyOutline anomalyOutline;
@@ -90,6 +95,35 @@ public class AnomalyTarget : MonoBehaviour
         {
             objetoCorregido.SetActive(false);
         }
+
+        SetupAmbientAudio();
+    }
+
+    void SetupAmbientAudio()
+    {
+        if (!playAmbientAudioOnStart) return;
+
+        if (ambientAudioSource == null)
+        {
+            ambientAudioSource = GetComponent<AudioSource>();
+        }
+
+        if (ambientAudioSource == null) return;
+
+        ambientAudioSource.loop = true;
+        ambientAudioSource.playOnAwake = false;
+
+        if (!isFixed)
+        {
+            ambientAudioSource.Play();
+        }
+    }
+
+    void StopAmbientAudio()
+    {
+        if (ambientAudioSource == null) return;
+
+        ambientAudioSource.Stop();
     }
 
     void SetupOutline()
@@ -140,6 +174,11 @@ public class AnomalyTarget : MonoBehaviour
         isFixed = true;
 
         Debug.Log("Anomalía corregida: " + gameObject.name);
+
+        if (stopAmbientAudioOnFixed)
+        {
+            StopAmbientAudio();
+        }
 
         if (playCorrectSFX && AudioManager.Instance != null)
         {

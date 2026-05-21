@@ -11,6 +11,14 @@ public class ClickScene : MonoBehaviour
     [SerializeField] CanvasGroup blackFadeCanvasGroup;
     [SerializeField] float fadeDuration = 1.5f;
 
+    [Header("Audio")]
+    [SerializeField] bool fadeOutMusic = true;
+    [SerializeField] float musicFadeOutDuration = 1.5f;
+
+    [Header("SFX")]
+    [SerializeField] bool playClickSFX = true;
+    [SerializeField] int clickSFXIndex = 3;
+
     bool isLoading;
 
     private void Start()
@@ -46,6 +54,16 @@ public class ClickScene : MonoBehaviour
     {
         isLoading = true;
 
+        if (playClickSFX && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(clickSFXIndex);
+        }
+
+        if (fadeOutMusic && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeOutMusic(musicFadeOutDuration);
+        }
+
         if (blackFadeCanvasGroup != null)
         {
             blackFadeCanvasGroup.gameObject.SetActive(true);
@@ -53,6 +71,10 @@ public class ClickScene : MonoBehaviour
             blackFadeCanvasGroup.interactable = false;
 
             yield return StartCoroutine(FadeCanvasGroup(blackFadeCanvasGroup, 0f, 1f, fadeDuration));
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(fadeDuration);
         }
 
         SceneManager.LoadScene(sceneName);
@@ -68,7 +90,9 @@ public class ClickScene : MonoBehaviour
         while (timer < duration)
         {
             timer += Time.unscaledDeltaTime;
-            float t = timer / duration;
+
+            float t = Mathf.Clamp01(timer / duration);
+            t = Mathf.SmoothStep(0f, 1f, t);
 
             canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
 
