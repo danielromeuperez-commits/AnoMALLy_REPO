@@ -21,27 +21,41 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] bool requireAllAnomaliesFixed = true;
 
     [Header("Distancias")]
-    [Tooltip("A esta distancia empieza la zona del efecto.")]
     [SerializeField] float startEffectDistance = 6f;
-
-    [Tooltip("A esta distancia el fade blanco llega al 100% y el jugador queda congelado.")]
     [SerializeField] float completeEffectDistance = 1.5f;
 
     [Header("Ralentización")]
-    [Tooltip("Velocidad normal del tiempo.")]
     [SerializeField] float normalTimeScale = 1f;
-
-    [Tooltip("Velocidad mínima antes de congelar totalmente.")]
     [SerializeField] float minimumTimeScale = 0.08f;
 
     [Header("Fade blanco")]
     [SerializeField] CanvasGroup whiteFadeCanvasGroup;
-
-    [Tooltip("Cuánto tiene que avanzar el jugador dentro de la zona antes de que empiece a notarse el blanco. Más alto = empieza más tarde.")]
     [SerializeField, Range(0f, 0.95f)] float whiteFadeStartProgress = 0.35f;
-
-    [Tooltip("Suavidad del fade blanco. Más alto = tarda más en notarse al principio.")]
     [SerializeField, Range(1f, 5f)] float whiteFadeSoftness = 2.5f;
+
+    [Header("Audio puerta final")]
+    [SerializeField] bool playFinalDoorOpenSFX = true;
+    [SerializeField] int finalDoorOpenSFXIndex = 9; // Final_Door_Opening
+
+    [Header("Audio entrando a la puerta")]
+    [SerializeField] bool playEnterDoorAudio = true;
+    [SerializeField] int enterDoorSFXIndex = 11; // Sound_Enter_Final_Door
+    [SerializeField] AudioSource enterDoorAudioSource;
+    [SerializeField, Range(0f, 1f)] float enterDoorVolume = 0.6f;
+
+    [Header("Sonidos de fondo que se apagan al entrar")]
+    [SerializeField] bool fadeBackgroundSoundsWhileEntering = true;
+
+    [Tooltip("Aquí arrastras los AudioSource de sonidos ambientales: TV estática, ojos, música del escenario, etc.")]
+    [SerializeField] AudioSource[] backgroundAudioSourcesToFade;
+
+    [SerializeField, Range(0f, 1f)] float minimumBackgroundVolume = 0f;
+
+    [Header("Fade del audio al volver al menú")]
+    [SerializeField] bool fadeOutEnterDoorAudioWithBlackFade = true;
+
+    [Header("Pausa")]
+    [SerializeField] bool disablePauseWhenEnteringFinalDoor = true;
 
     [Header("Texto final")]
     [SerializeField] TMP_Text finalText;
@@ -64,20 +78,41 @@ public class SceneLoader : MonoBehaviour
 
     bool sequenceStarted;
     bool finalSequenceStarted;
+    bool enterDoorAudioStarted;
+
+    static bool finalDoorOpenSoundPlayedGlobal;
 
     float originalFixedDeltaTime;
+    float[] originalBackgroundVolumes;
 
     private void Start()
     {
+        finalDoorOpenSoundPlayedGlobal = false;
+
         originalFixedDeltaTime = Time.fixedDeltaTime;
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;
 
+        PauseMenu.CanPause = true;
+
         if (anomalyManager == null)
         {
             anomalyManager = FindAnyObjectByType<AnomalyManager>();
         }
+
+        if (enterDoorAudioSource == null)
+        {
+            enterDoorAudioSource = GetComponent<AudioSource>();
+        }
+
+        if (enterDoorAudioSource == null)
+        {
+            enterDoorAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        SetupEnterDoorAudioSource();
+        CacheBackgroundVolumes();
 
         if (whiteFadeCanvasGroup != null)
         {
@@ -87,7 +122,6 @@ public class SceneLoader : MonoBehaviour
             whiteFadeCanvasGroup.interactable = false;
         }
 
-        // No tocamos el alpha del negro aquí para no romper el fade inicial del gameplay.
         if (blackFadeCanvasGroup != null)
         {
             blackFadeCanvasGroup.blocksRaycasts = false;
@@ -130,13 +164,25 @@ public class SceneLoader : MonoBehaviour
             return;
         }
 
-        sequenceStarted = true;
+        if (!sequenceStarted)
+        {
+            sequenceStarted = true;
+
+            if (disablePauseWhenEnteringFinalDoor)
+            {
+                DisablePause();
+            }
+
+            PlayFinalDoorOpenSound();
+            StartEnterDoorAudio();
+        }
 
         float progress = Mathf.InverseLerp(startEffectDistance, completeEffectDistance, distance);
         progress = Mathf.Clamp01(progress);
 
         ApplyWhiteFade(progress);
         ApplySlowMotion(progress);
+        ApplyBackgroundFade(progress);
 
         if (progress >= 1f)
         {
@@ -145,18 +191,94 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    void SetupEnterDoorAudioSource()
+    {
+        if (enterDoorAudioSource == null) return;
+
+        enterDoorAudioSource.playOnAwake = false;
+        enterDoorAudioSource.loop = true;
+        enterDoorAudioSource.volume = enterDoorVolume;
+        enterDoorAudioSource.spatialBlend = 1f;
+
+        if (AudioManager.Instance == null) return;
+        if (AudioManager.Instance.sfxLibrary == null) return;
+        if (enterDoorSFXIndex < 0 || enterDoorSFXIndex >= AudioManager.Instance.sfxLibrary.Length) return;
+
+        enterDoorAudioSource.clip = AudioManager.Instance.sfxLibrary[enterDoorSFXIndex];
+    }
+
+    void CacheBackgroundVolumes()
+    {
+        if (backgroundAudioSourcesToFade == null)
+        {
+            originalBackgroundVolumes = new float[0];
+            return;
+        }
+
+        originalBackgroundVolumes = new float[backgroundAudioSourcesToFade.Length];
+
+        for (int i = 0; i < backgroundAudioSourcesToFade.Length; i++)
+        {
+            if (backgroundAudioSourcesToFade[i] != null)
+            {
+                originalBackgroundVolumes[i] = backgroundAudioSourcesToFade[i].volume;
+            }
+        }
+    }
+
+    void PlayFinalDoorOpenSound()
+    {
+        if (!playFinalDoorOpenSFX) return;
+        if (finalDoorOpenSoundPlayedGlobal) return;
+
+        finalDoorOpenSoundPlayedGlobal = true;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(finalDoorOpenSFXIndex);
+        }
+    }
+
+    void StartEnterDoorAudio()
+    {
+        if (!playEnterDoorAudio) return;
+        if (enterDoorAudioStarted) return;
+        if (enterDoorAudioSource == null) return;
+
+        enterDoorAudioStarted = true;
+
+        if (enterDoorAudioSource.clip == null)
+        {
+            SetupEnterDoorAudioSource();
+        }
+
+        if (enterDoorAudioSource.clip == null) return;
+
+        enterDoorAudioSource.volume = enterDoorVolume;
+        enterDoorAudioSource.loop = true;
+        enterDoorAudioSource.Play();
+    }
+
+    void StopEnterDoorAudio()
+    {
+        if (enterDoorAudioSource == null) return;
+
+        if (enterDoorAudioSource.isPlaying)
+        {
+            enterDoorAudioSource.Stop();
+        }
+
+        enterDoorAudioStarted = false;
+    }
+
     void ApplyWhiteFade(float progress)
     {
         if (whiteFadeCanvasGroup == null) return;
 
-        // Esto hace que el fade blanco tarde más en empezar.
         float delayedProgress = Mathf.InverseLerp(whiteFadeStartProgress, 1f, progress);
         delayedProgress = Mathf.Clamp01(delayedProgress);
 
-        // Suavizado para que no entre de golpe.
         delayedProgress = Mathf.SmoothStep(0f, 1f, delayedProgress);
-
-        // Cuanto mayor sea whiteFadeSoftness, menos se nota al principio.
         delayedProgress = Mathf.Pow(delayedProgress, whiteFadeSoftness);
 
         whiteFadeCanvasGroup.alpha = delayedProgress;
@@ -170,6 +292,39 @@ public class SceneLoader : MonoBehaviour
         Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale;
     }
 
+    void ApplyBackgroundFade(float progress)
+    {
+        if (!fadeBackgroundSoundsWhileEntering) return;
+        if (backgroundAudioSourcesToFade == null) return;
+        if (originalBackgroundVolumes == null) return;
+
+        float t = Mathf.SmoothStep(0f, 1f, progress);
+
+        for (int i = 0; i < backgroundAudioSourcesToFade.Length; i++)
+        {
+            if (backgroundAudioSourcesToFade[i] == null) continue;
+            if (backgroundAudioSourcesToFade[i] == enterDoorAudioSource) continue;
+            if (i >= originalBackgroundVolumes.Length) continue;
+
+            float targetVolume = Mathf.Lerp(originalBackgroundVolumes[i], minimumBackgroundVolume, t);
+            backgroundAudioSourcesToFade[i].volume = targetVolume;
+        }
+    }
+
+    void RestoreBackgroundVolumes()
+    {
+        if (backgroundAudioSourcesToFade == null) return;
+        if (originalBackgroundVolumes == null) return;
+
+        for (int i = 0; i < backgroundAudioSourcesToFade.Length; i++)
+        {
+            if (backgroundAudioSourcesToFade[i] == null) continue;
+            if (i >= originalBackgroundVolumes.Length) continue;
+
+            backgroundAudioSourcesToFade[i].volume = originalBackgroundVolumes[i];
+        }
+    }
+
     void ResetApproachEffect()
     {
         sequenceStarted = false;
@@ -179,8 +334,28 @@ public class SceneLoader : MonoBehaviour
             whiteFadeCanvasGroup.alpha = 0f;
         }
 
+        StopEnterDoorAudio();
+        RestoreBackgroundVolumes();
+
+        if (!finalSequenceStarted)
+        {
+            PauseMenu.CanPause = true;
+        }
+
         Time.timeScale = normalTimeScale;
         Time.fixedDeltaTime = originalFixedDeltaTime;
+    }
+
+    void DisablePause()
+    {
+        PauseMenu.CanPause = false;
+
+        PauseMenu pauseMenu = FindAnyObjectByType<PauseMenu>();
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.ForceClosePauseMenu();
+        }
     }
 
     IEnumerator FinalSequence()
@@ -190,6 +365,7 @@ public class SceneLoader : MonoBehaviour
             Debug.Log("Final iniciado. Jugador congelado.");
         }
 
+        DisablePause();
         FreezePlayerCompletely();
 
         if (whiteFadeCanvasGroup != null)
@@ -220,6 +396,11 @@ public class SceneLoader : MonoBehaviour
             blackFadeCanvasGroup.blocksRaycasts = true;
             blackFadeCanvasGroup.interactable = false;
 
+            if (fadeOutEnterDoorAudioWithBlackFade)
+            {
+                StartCoroutine(FadeOutEnterDoorAudio(blackFadeDuration));
+            }
+
             yield return StartCoroutine(FadeCanvasGroupUnscaled(
                 blackFadeCanvasGroup,
                 blackFadeCanvasGroup.alpha,
@@ -228,8 +409,12 @@ public class SceneLoader : MonoBehaviour
             ));
         }
 
+        StopEnterDoorAudio();
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;
+
+        PauseMenu.CanPause = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -268,6 +453,28 @@ public class SceneLoader : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    IEnumerator FadeOutEnterDoorAudio(float duration)
+    {
+        if (enterDoorAudioSource == null) yield break;
+
+        float startVolume = enterDoorAudioSource.volume;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            float t = Mathf.Clamp01(timer / duration);
+            t = Mathf.SmoothStep(0f, 1f, t);
+
+            enterDoorAudioSource.volume = Mathf.Lerp(startVolume, 0f, t);
+
+            yield return null;
+        }
+
+        enterDoorAudioSource.volume = 0f;
     }
 
     IEnumerator FadeCanvasGroupUnscaled(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float duration)
@@ -316,7 +523,10 @@ public class SceneLoader : MonoBehaviour
 
     private void OnDisable()
     {
+        StopEnterDoorAudio();
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;
+        PauseMenu.CanPause = true;
     }
 }

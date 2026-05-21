@@ -2,24 +2,57 @@ using UnityEngine;
 
 public class Door_Anim : MonoBehaviour
 {
-    Animator anim;
+    [Header("Animator")]
+    [SerializeField] Animator anim;
+
+    [Header("Audio")]
+    [SerializeField] bool playDoorOpenSound = true;
+    [SerializeField] int doorOpenSFXIndex = 7; // Door_Open
+
+    [SerializeField] bool playDoorCloseSound = false;
+    [SerializeField] int doorCloseSFXIndex = 6; // Door_Closing
+
+    bool isOpen;
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        if (anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        anim.SetBool("character_nearby", true);
+
+        if (!isOpen)
         {
-            anim.SetBool("character_nearby", true);
+            isOpen = true;
+
+            if (playDoorOpenSound && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(doorOpenSFXIndex);
+            }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        anim.SetBool("character_nearby", false);
+
+        if (isOpen)
         {
-            anim.SetBool("character_nearby", false);
+            isOpen = false;
+
+            if (playDoorCloseSound && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(doorCloseSFXIndex);
+            }
         }
     }
 }
