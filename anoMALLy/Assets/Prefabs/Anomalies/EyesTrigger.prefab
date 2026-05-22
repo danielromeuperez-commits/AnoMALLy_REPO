@@ -68,3 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EyesManagerTrigger
   eyes: {fileID: 0}
   trigger: {fileID: 7522088082169853174}
+  playAppearSFX: 1
+  appearSFXIndex: 2
+  eyesAudioSource: {fileID: 0}
+  eyesVolume: 0.7

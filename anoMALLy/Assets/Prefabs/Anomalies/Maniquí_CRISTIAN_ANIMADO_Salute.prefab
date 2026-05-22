@@ -30,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.222
+      value: -10.419
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.7030506
+      value: 5.712
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.612
+      value: 6.105
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1244,6 +1244,9 @@ MonoBehaviour:
   correctSFXIndex: 0
   playWrongSFX: 1
   wrongSFXIndex: 1
+  playAmbientAudioOnStart: 0
+  stopAmbientAudioOnFixed: 1
+  ambientAudioSource: {fileID: 0}
   useOutline: 1
   anomalyOutline: {fileID: 0}
   audioSource: {fileID: 0}
@@ -1268,5 +1271,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.5991253, z: 1}
-  m_Center: {x: 0, y: 0.8994153, z: 0}
+  m_Size: {x: 0.14835359, y: 1.908793, z: 1.8585305}
+  m_Center: {x: -0.15913141, y: 1.054249, z: -0.0009920597}
