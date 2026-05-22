@@ -430,7 +430,26 @@ public class SceneLoader : MonoBehaviour
     }
 
     void FreezePlayerCompletely()
+
+
     {
+        PlayerFootsteps footsteps = player.GetComponent<PlayerFootsteps>();
+
+        if (footsteps != null)
+        {
+            footsteps.enabled = false;
+        }
+
+        AudioSource[] playerAudioSources = player.GetComponentsInChildren<AudioSource>();
+
+        for (int i = 0; i < playerAudioSources.Length; i++)
+        {
+            if (playerAudioSources[i] != null)
+            {
+                playerAudioSources[i].Stop();
+            }
+        }
+
         for (int i = 0; i < playerScriptsToDisable.Length; i++)
         {
             if (playerScriptsToDisable[i] != null)

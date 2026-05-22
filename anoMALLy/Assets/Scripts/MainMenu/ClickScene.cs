@@ -54,6 +54,8 @@ public class ClickScene : MonoBehaviour
     {
         isLoading = true;
 
+        UIButtonEffects.LockButtons();
+
         if (playClickSFX && AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySFX(clickSFXIndex);

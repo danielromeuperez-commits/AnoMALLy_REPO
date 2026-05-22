@@ -285,7 +285,7 @@ MonoBehaviour:
   fadeOutMusic: 1
   musicFadeOutDuration: 1.5
   playClickSFX: 1
-  clickSFXIndex: 4
+  clickSFXIndex: 3
 --- !u!114 &528280406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +405,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
   hoverSFXIndex: 4
+  hoverVolume: 0.25
   clickSFXIndex: 3
+  clickVolume: 0.3
   buttonImage: {fileID: 528280407}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
@@ -731,7 +733,7 @@ PrefabInstance:
     - target: {fileID: 3123351014759454383, guid: 59ba7222ce35ad342b4fa8d08386dbc7, type: 3}
       propertyPath: 'sfxLibrary.Array.data[4]'
       value: 
-      objectReference: {fileID: 8300000, guid: 9a62398ca822f5f4c9b1173dd35d28af, type: 3}
+      objectReference: {fileID: 8300000, guid: 794793f78f985ba4fb9f616f2006c170, type: 3}
     - target: {fileID: 3123351014759454383, guid: 59ba7222ce35ad342b4fa8d08386dbc7, type: 3}
       propertyPath: 'sfxLibrary.Array.data[5]'
       value: 
@@ -1003,7 +1005,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
   hoverSFXIndex: 4
+  hoverVolume: 0.25
   clickSFXIndex: 3
+  clickVolume: 0.3
   buttonImage: {fileID: 879321969}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}

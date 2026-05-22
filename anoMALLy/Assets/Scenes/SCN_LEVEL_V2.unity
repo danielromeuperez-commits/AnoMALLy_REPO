@@ -13709,6 +13709,7 @@ GameObject:
   - component: {fileID: 935998013}
   - component: {fileID: 935998012}
   - component: {fileID: 935998011}
+  - component: {fileID: 935998014}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -13830,6 +13831,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935998009}
   m_CullTransparentMesh: 1
+--- !u!114 &935998014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935998009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9ac554ee7d89c428c75034b96c6d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
+  hoverSFXIndex: 4
+  hoverVolume: 0.25
+  clickSFXIndex: 3
+  clickVolume: 0.4
+  buttonImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  clickColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  buttonText: {fileID: 0}
+  normalTextColor: {r: 0, g: 0, b: 0, a: 1}
+  hoverTextColor: {r: 0, g: 0, b: 0, a: 1}
+  useScaleEffect: 1
+  normalScale: 1
+  hoverScale: 1.05
 --- !u!4 &937206580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 250140587658096129, guid: 24082eafcce278a4c97be27738bc323d, type: 3}
@@ -24980,6 +25007,7 @@ GameObject:
   - component: {fileID: 1583420864}
   - component: {fileID: 1583420863}
   - component: {fileID: 1583420862}
+  - component: {fileID: 1583420865}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -25101,6 +25129,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583420860}
   m_CullTransparentMesh: 1
+--- !u!114 &1583420865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583420860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9ac554ee7d89c428c75034b96c6d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
+  hoverSFXIndex: 4
+  hoverVolume: 0.25
+  clickSFXIndex: 3
+  clickVolume: 0.4
+  buttonImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  clickColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  buttonText: {fileID: 0}
+  normalTextColor: {r: 0, g: 0, b: 0, a: 1}
+  hoverTextColor: {r: 0, g: 0, b: 0, a: 1}
+  useScaleEffect: 1
+  normalScale: 1
+  hoverScale: 1.05
 --- !u!1001 &1586475134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25523,7 +25577,7 @@ Transform:
   m_GameObject: {fileID: 1608579947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.43, y: 0.43, z: 25.94}
+  m_LocalPosition: {x: -11.315691, y: 0.43, z: 25.94}
   m_LocalScale: {x: 3.8857, y: 2.7739, z: 12.4716}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26040,7 +26094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9167668720616753815, guid: 88b90659c07e57b42a3efe1f7a3adb59, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.824309
+      value: -10.71
       objectReference: {fileID: 0}
     - target: {fileID: 9167668720616753815, guid: 88b90659c07e57b42a3efe1f7a3adb59, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28234,24 +28288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0058a3de641e194eae4d0b76ac9fc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFootsteps
-  footstepSFXIndex: 10
+  footstepClip: {fileID: 8300000, guid: 1fe30690a6f2b0140a6635eb94c3bed1, type: 3}
   footstepAudioSource: {fileID: 0}
-  footstepVolume: 0.35
+  footstepVolume: 0.2
   playerTransform: {fileID: 1440684824}
-  minMoveDistance: 0.01
-  walkStepInterval: 0.55
-  runStepInterval: 0.35
-  useRunInterval: 0
-  checkGrounded: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheckDistance: 1.3
-  playOnlyWhenMoving: 1
-  randomPitchMin: 0.95
-  randomPitchMax: 1.05
-  preventOverlappingSteps: 1
-  stopDelay: 0.18
+  minimumHorizontalSpeed: 0.08
+  stopDelay: 0.15
+  use3DSound: 0
+  footstepPitch: 1
 --- !u!1 &1717552718
 GameObject:
   m_ObjectHideFlags: 0
@@ -35002,7 +35046,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3227263478858177747, guid: 6b9497cd8dd490549abfaa71c07e9c42, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.845
+      value: -10.730691
       objectReference: {fileID: 0}
     - target: {fileID: 3227263478858177747, guid: 6b9497cd8dd490549abfaa71c07e9c42, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35447,12 +35491,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1416735520367597390, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416735520367597390, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.221
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1416735520367597390, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.009
+      value: 0.00000006426126
       objectReference: {fileID: 0}
     - target: {fileID: 1506491282812108107, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -36405,7 +36453,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 646136271705945985, guid: cb4d49811e3240646a4fb4aad8870bd2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.824309
+      value: -10.71
       objectReference: {fileID: 0}
     - target: {fileID: 646136271705945985, guid: cb4d49811e3240646a4fb4aad8870bd2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -36618,7 +36666,7 @@ PrefabInstance:
       objectReference: {fileID: 1924832158}
     - target: {fileID: 878328145997645088, guid: 0309573e9f0473e42beb9f49af545dd8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.824309
+      value: -10.71
       objectReference: {fileID: 0}
     - target: {fileID: 878328145997645088, guid: 0309573e9f0473e42beb9f49af545dd8, type: 3}
       propertyPath: m_LocalPosition.y

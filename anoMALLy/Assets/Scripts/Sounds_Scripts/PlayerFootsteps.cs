@@ -3,42 +3,26 @@ using UnityEngine;
 public class PlayerFootsteps : MonoBehaviour
 {
     [Header("Audio")]
-    [SerializeField] int footstepSFXIndex = 10;
+    [SerializeField] AudioClip footstepClip;
     [SerializeField] AudioSource footstepAudioSource;
     [SerializeField, Range(0f, 1f)] float footstepVolume = 0.35f;
 
-    [Header("Detección de movimiento")]
+    [Header("Detección de movimiento horizontal")]
     [SerializeField] Transform playerTransform;
 
-    [Tooltip("Cuánto tiene que moverse realmente para considerarlo caminar. Súbelo si detecta micro saltitos.")]
-    [SerializeField] float minMoveDistance = 0.025f;
+    [Tooltip("Velocidad horizontal mínima para considerar que el player está caminando.")]
+    [SerializeField] float minimumHorizontalSpeed = 0.08f;
 
-    [Header("Ritmo de pasos")]
-    [SerializeField] float walkStepInterval = 0.8f;
-    [SerializeField] float runStepInterval = 0.5f;
-    [SerializeField] bool useRunInterval = false;
-
-    [Header("Detección de suelo")]
-    [SerializeField] bool checkGrounded = false;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] float groundCheckDistance = 1.3f;
+    [Tooltip("Tiempo que espera antes de parar el audio al dejar de moverte.")]
+    [SerializeField] float stopDelay = 0.15f;
 
     [Header("Opciones")]
-    [SerializeField] bool playOnlyWhenMoving = true;
-    [SerializeField] float randomPitchMin = 0.95f;
-    [SerializeField] float randomPitchMax = 1.05f;
-
-    [Header("Antisolapamiento")]
-    [SerializeField] bool preventOverlappingSteps = true;
-
-    [Header("Evitar cortes por microparadas")]
-    [Tooltip("Tiempo que espera antes de cortar el paso cuando detecta que has dejado de moverte.")]
-    [SerializeField] float stopDelay = 0.18f;
+    [SerializeField] bool use3DSound = false;
+    [SerializeField] float footstepPitch = 1f;
 
     Vector3 lastPosition;
-    float stepTimer;
     float notMovingTimer;
-    bool wasMovingLastFrame;
+    bool footstepsPlaying;
 
     private void Start()
     {
@@ -57,123 +41,92 @@ public class PlayerFootsteps : MonoBehaviour
             footstepAudioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        footstepAudioSource.clip = footstepClip;
         footstepAudioSource.playOnAwake = false;
-        footstepAudioSource.loop = false;
-        footstepAudioSource.spatialBlend = 0f;
+        footstepAudioSource.loop = true;
         footstepAudioSource.volume = footstepVolume;
+        footstepAudioSource.pitch = footstepPitch;
+        footstepAudioSource.spatialBlend = use3DSound ? 1f : 0f;
 
         lastPosition = playerTransform.position;
-        stepTimer = walkStepInterval;
     }
 
     private void Update()
     {
         if (playerTransform == null) return;
+        if (footstepAudioSource == null) return;
+        if (footstepClip == null) return;
 
-        bool isMoving = IsPlayerMoving();
-        bool isGrounded = IsGrounded();
+        bool isMovingHorizontally = IsMovingHorizontally();
 
-        if (checkGrounded && !isGrounded)
+        if (isMovingHorizontally)
         {
-            StopFootstepImmediately();
-
-            wasMovingLastFrame = false;
-            stepTimer = 0f;
             notMovingTimer = 0f;
-            lastPosition = playerTransform.position;
-            return;
+            StartFootsteps();
         }
-
-        if (playOnlyWhenMoving && !isMoving)
+        else
         {
             notMovingTimer += Time.deltaTime;
 
             if (notMovingTimer >= stopDelay)
             {
-                StopFootstepImmediately();
-
-                wasMovingLastFrame = false;
-                stepTimer = 0f;
+                StopFootsteps();
             }
-
-            lastPosition = playerTransform.position;
-            return;
         }
 
-        notMovingTimer = 0f;
-
-        float currentInterval = useRunInterval ? runStepInterval : walkStepInterval;
-
-        if (!wasMovingLastFrame && isMoving)
-        {
-            stepTimer = currentInterval;
-        }
-
-        stepTimer += Time.deltaTime;
-
-        if (stepTimer >= currentInterval)
-        {
-            PlayFootstep();
-            stepTimer = 0f;
-        }
-
-        wasMovingLastFrame = isMoving;
         lastPosition = playerTransform.position;
     }
 
-    bool IsPlayerMoving()
+    bool IsMovingHorizontally()
     {
         Vector3 currentPosition = playerTransform.position;
 
-        Vector3 flatCurrentPosition = new Vector3(currentPosition.x, 0f, currentPosition.z);
-        Vector3 flatLastPosition = new Vector3(lastPosition.x, 0f, lastPosition.z);
-
-        float distanceMoved = Vector3.Distance(flatCurrentPosition, flatLastPosition);
-
-        return distanceMoved > minMoveDistance;
-    }
-
-    bool IsGrounded()
-    {
-        if (!checkGrounded) return true;
-
-        return Physics.Raycast(
-            playerTransform.position,
-            Vector3.down,
-            groundCheckDistance,
-            groundLayer
+        Vector3 currentFlatPosition = new Vector3(
+            currentPosition.x,
+            0f,
+            currentPosition.z
         );
+
+        Vector3 lastFlatPosition = new Vector3(
+            lastPosition.x,
+            0f,
+            lastPosition.z
+        );
+
+        float distance = Vector3.Distance(currentFlatPosition, lastFlatPosition);
+        float horizontalSpeed = distance / Mathf.Max(Time.deltaTime, 0.0001f);
+
+        return horizontalSpeed > minimumHorizontalSpeed;
     }
 
-    void PlayFootstep()
+    void StartFootsteps()
     {
-        if (AudioManager.Instance == null) return;
-        if (AudioManager.Instance.sfxLibrary == null) return;
-        if (footstepSFXIndex < 0 || footstepSFXIndex >= AudioManager.Instance.sfxLibrary.Length) return;
+        if (footstepsPlaying) return;
 
-        AudioClip clip = AudioManager.Instance.sfxLibrary[footstepSFXIndex];
+        footstepsPlaying = true;
 
-        if (clip == null) return;
-        if (footstepAudioSource == null) return;
-
-        if (preventOverlappingSteps && footstepAudioSource.isPlaying)
-        {
-            return;
-        }
-
-        footstepAudioSource.clip = clip;
+        footstepAudioSource.clip = footstepClip;
         footstepAudioSource.volume = footstepVolume;
-        footstepAudioSource.pitch = Random.Range(randomPitchMin, randomPitchMax);
+        footstepAudioSource.pitch = footstepPitch;
+        footstepAudioSource.loop = true;
+
         footstepAudioSource.Play();
     }
 
-    void StopFootstepImmediately()
+    void StopFootsteps()
     {
-        if (footstepAudioSource == null) return;
+        if (!footstepsPlaying) return;
+
+        footstepsPlaying = false;
 
         if (footstepAudioSource.isPlaying)
         {
             footstepAudioSource.Stop();
         }
+    }
+
+    private void OnDisable()
+    {
+        StopFootsteps();
     }
 }
