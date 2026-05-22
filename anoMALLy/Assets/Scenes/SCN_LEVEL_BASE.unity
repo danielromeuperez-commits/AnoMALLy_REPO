@@ -15120,7 +15120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.56
+      value: 1.659
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15128,7 +15128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.34
+      value: -34.976
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -34549,11 +34549,11 @@ PrefabInstance:
       objectReference: {fileID: 1707201817}
     - target: {fileID: 2030834539900644372, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: playDoorOpenSound
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2030834539900644372, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: playDoorCloseSound
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2052276428643310644, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_StaticEditorFlags

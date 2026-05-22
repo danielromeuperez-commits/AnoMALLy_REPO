@@ -15430,7 +15430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.56
+      value: 1.381
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15438,7 +15438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.34
+      value: -35.12
       objectReference: {fileID: 0}
     - target: {fileID: 5739953646659841454, guid: a0ce5d126fa3b1a46821cef786e9bb6f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26947,6 +26947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIChargeTime
   chargedDetectorFill: {fileID: 516194817}
   smoothSpeed: 130
+  delayBeforeCharge: 0.5
   anodetector: {fileID: 1440684825}
 --- !u!222 &1641245989
 CanvasRenderer:

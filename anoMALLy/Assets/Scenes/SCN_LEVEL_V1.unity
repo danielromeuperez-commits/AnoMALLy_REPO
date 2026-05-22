@@ -26285,7 +26285,7 @@ MonoBehaviour:
   totalAnimationFrames: 149
   glassHitClip: {fileID: 8300000, guid: 0360a17cd58d2a94a9224550c096129e, type: 3}
   glassHitAudioSource: {fileID: 0}
-  volume: 0.3
+  volume: 0.755
   minDistance: 1
   maxDistance: 3
 --- !u!95 &1474511853 stripped
