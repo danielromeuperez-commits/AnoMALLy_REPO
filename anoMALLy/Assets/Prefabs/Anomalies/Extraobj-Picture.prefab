@@ -86,6 +86,9 @@ MonoBehaviour:
   correctSFXIndex: 0
   playWrongSFX: 1
   wrongSFXIndex: 1
+  playAmbientAudioOnStart: 0
+  stopAmbientAudioOnFixed: 1
+  ambientAudioSource: {fileID: 0}
   useOutline: 1
   anomalyOutline: {fileID: 0}
   audioSource: {fileID: 0}

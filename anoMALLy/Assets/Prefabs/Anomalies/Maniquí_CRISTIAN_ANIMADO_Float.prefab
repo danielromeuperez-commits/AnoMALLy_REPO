@@ -30,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.096
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 7.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.05
+      value: 18.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1537206019224a4abd2c7caa1406ff7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1244,6 +1244,9 @@ MonoBehaviour:
   correctSFXIndex: 0
   playWrongSFX: 1
   wrongSFXIndex: 1
+  playAmbientAudioOnStart: 0
+  stopAmbientAudioOnFixed: 1
+  ambientAudioSource: {fileID: 0}
   useOutline: 1
   anomalyOutline: {fileID: 0}
   audioSource: {fileID: 0}
