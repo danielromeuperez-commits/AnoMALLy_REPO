@@ -2136,17 +2136,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e74008a54589d324d89ab879f51c9dd0, type: 3}
   m_PrefabInstance: {fileID: 730326986}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &186586351 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
-  m_PrefabInstance: {fileID: 2012263424}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e25fb49d457194da4b07a46b2f18b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnomalyManager
 --- !u!1001 &187073351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13562,6 +13551,7 @@ GameObject:
   - component: {fileID: 935998013}
   - component: {fileID: 935998012}
   - component: {fileID: 935998011}
+  - component: {fileID: 935998014}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -13683,6 +13673,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935998009}
   m_CullTransparentMesh: 1
+--- !u!114 &935998014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935998009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9ac554ee7d89c428c75034b96c6d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
+  hoverSFXIndex: 4
+  hoverVolume: 0.25
+  clickSFXIndex: 3
+  clickVolume: 0.4
+  buttonImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  clickColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  buttonText: {fileID: 0}
+  normalTextColor: {r: 0, g: 0, b: 0, a: 1}
+  hoverTextColor: {r: 0, g: 0, b: 0, a: 1}
+  useScaleEffect: 1
+  normalScale: 1
+  hoverScale: 1.05
 --- !u!4 &937206580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 250140587658096129, guid: 24082eafcce278a4c97be27738bc323d, type: 3}
@@ -24431,6 +24447,7 @@ GameObject:
   - component: {fileID: 1583420864}
   - component: {fileID: 1583420863}
   - component: {fileID: 1583420862}
+  - component: {fileID: 1583420865}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -24552,6 +24569,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583420860}
   m_CullTransparentMesh: 1
+--- !u!114 &1583420865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583420860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9ac554ee7d89c428c75034b96c6d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonEffects
+  hoverSFXIndex: 4
+  hoverVolume: 0.25
+  clickSFXIndex: 3
+  clickVolume: 0.4
+  buttonImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  clickColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  buttonText: {fileID: 0}
+  normalTextColor: {r: 0, g: 0, b: 0, a: 1}
+  hoverTextColor: {r: 0, g: 0, b: 0, a: 1}
+  useScaleEffect: 1
+  normalScale: 1
+  hoverScale: 1.05
 --- !u!1001 &1586475134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25044,23 +25087,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7201432585229762889, guid: 8448a369f4a31a949a26840939b00eed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -27436,24 +27479,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0058a3de641e194eae4d0b76ac9fc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFootsteps
-  footstepSFXIndex: 10
+  footstepClip: {fileID: 8300000, guid: 1fe30690a6f2b0140a6635eb94c3bed1, type: 3}
   footstepAudioSource: {fileID: 0}
-  footstepVolume: 0.35
+  footstepVolume: 0.2
   playerTransform: {fileID: 1440684824}
-  minMoveDistance: 0.01
-  walkStepInterval: 0.55
-  runStepInterval: 0.35
-  useRunInterval: 0
-  checkGrounded: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheckDistance: 1.3
-  playOnlyWhenMoving: 1
-  randomPitchMin: 0.95
-  randomPitchMax: 1.05
-  preventOverlappingSteps: 1
-  stopDelay: 0.18
+  minimumHorizontalSpeed: 0.08
+  stopDelay: 0.15
+  use3DSound: 0
+  footstepPitch: 1
 --- !u!1 &1717552718
 GameObject:
   m_ObjectHideFlags: 0
@@ -27803,63 +27836,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 221477967299371637, guid: 6fc806c6938072d46bd7e9c5ec8dcf69, type: 3}
   m_PrefabInstance: {fileID: 1750085863}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1760511401
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.1942716
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.28512615
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 12.69016
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.4999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759298226326499465, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4566761610273761843, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-      propertyPath: m_Name
-      value: JARRON_Face
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
 --- !u!1001 &1763545081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29700,7 +29676,7 @@ GameObject:
   - component: {fileID: 1871303748}
   - component: {fileID: 1871303747}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Level_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29722,6 +29698,13 @@ MonoBehaviour:
   - SCN_LEVEL_V1
   - SCN_LEVEL_V2
   - SCN_LEVEL_V3
+  blackFadeCanvasGroup: {fileID: 1953925874}
+  fadeDuration: 2
+  holdBlackTime: 0.4
+  lockPlayerDuringFade: 1
+  playerScriptsToDisable:
+  - {fileID: 1715882737}
+  - {fileID: 0}
 --- !u!65 &1871303748
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29752,7 +29735,7 @@ Transform:
   m_GameObject: {fileID: 1871303746}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.99999, y: 0.44649, z: 18.90341}
+  m_LocalPosition: {x: 3.22, y: 0.44649, z: 18.90341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30240,17 +30223,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6199456115222031957, guid: 93d5e96ddf23201458de8413177091a4, type: 3}
   m_PrefabInstance: {fileID: 1928611669}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1929091119 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1230197522747385369, guid: 5b2c823f9a97ea0429eca476997e52d1, type: 3}
-  m_PrefabInstance: {fileID: 1760511401}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 787bcb92840312d4681da50db43437c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnomalyTarget
 --- !u!1 &1929598836
 GameObject:
   m_ObjectHideFlags: 0
@@ -32342,7 +32314,7 @@ PrefabInstance:
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[0]'
       value: 
-      objectReference: {fileID: 1929091119}
+      objectReference: {fileID: 0}
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[1]'
       value: 
@@ -32364,7 +32336,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1856309023040725148, guid: 0dd271a89eebc694284025c389a96106, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd271a89eebc694284025c389a96106, type: 3}
@@ -34218,7 +34191,7 @@ PrefabInstance:
     - target: {fileID: 569700449767043732, guid: b080228f2827c1b4db18e1a1e283eb8e, type: 3}
       propertyPath: anomalyManager
       value: 
-      objectReference: {fileID: 186586351}
+      objectReference: {fileID: 0}
     - target: {fileID: 596348972386649123, guid: b080228f2827c1b4db18e1a1e283eb8e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -34575,8 +34548,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1707201817}
     - target: {fileID: 2030834539900644372, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
+      propertyPath: playDoorOpenSound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030834539900644372, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: playDoorCloseSound
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2052276428643310644, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -35097,7 +35074,11 @@ PrefabInstance:
     - target: {fileID: 6583382034311859357, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: anomalyManager
       value: 
-      objectReference: {fileID: 186586351}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6583382034311859357, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
+      propertyPath: playEnterDoorAudio
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6583382034311859357, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
       propertyPath: blackFadeCanvasGroup
       value: 
@@ -35430,7 +35411,9 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6583382034311859357, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
+    - {fileID: 5185497924185714783, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3205283650582383648, guid: 640573d7bface0f40b90c9b7f8f83aa9, type: 3}
@@ -35531,4 +35514,3 @@ SceneRoots:
   - {fileID: 7810678545933971915}
   - {fileID: 1082832175}
   - {fileID: 1871303749}
-  - {fileID: 1760511401}

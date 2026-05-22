@@ -52,6 +52,11 @@ public class AnomalyTarget : MonoBehaviour
 
     private void Awake()
     {
+        if (anomalyManager == null)
+        {
+            anomalyManager = FindAnyObjectByType<AnomalyManager>();
+        }
+
         switch (gameObject.tag)
         {
             case "sound_anomaly":
@@ -91,6 +96,11 @@ public class AnomalyTarget : MonoBehaviour
 
     private void Start()
     {
+        if (anomalyManager == null)
+        {
+            anomalyManager = FindAnyObjectByType<AnomalyManager>();
+        }
+
         if (objetoCorregido != null && !isFixed)
         {
             objetoCorregido.SetActive(false);
@@ -212,6 +222,11 @@ public class AnomalyTarget : MonoBehaviour
         }
 
         onFixed?.Invoke();
+
+        if (anomalyManager == null)
+        {
+            anomalyManager = FindAnyObjectByType<AnomalyManager>();
+        }
 
         if (anomalyManager != null)
         {
