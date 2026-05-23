@@ -24688,6 +24688,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5713aadfe2ce66a4d810f1d934be0c4f, type: 3}
+--- !u!1001 &1498732281
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.2790558
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.994
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.000005076535
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0018819963
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0022856882
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.262
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493034043048677353, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.216
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991951527039583986, guid: fc160b5a32f928242b3f771071e24576, type: 3}
+      propertyPath: m_Name
+      value: poster libreria
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc160b5a32f928242b3f771071e24576, type: 3}
 --- !u!1001 &1502199192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38224,3 +38281,4 @@ SceneRoots:
   - {fileID: 2092378555}
   - {fileID: 2063394990}
   - {fileID: 929241385}
+  - {fileID: 1498732281}
