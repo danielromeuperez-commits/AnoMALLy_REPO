@@ -3,12 +3,12 @@ using UnityEngine;
 public class AnomalyManager : MonoBehaviour
 {
     [Header("Anomalías de la escena")]
-    [SerializeField] AnomalyTarget[] anomalies;
+    [SerializeField] public AnomalyTarget[] anomalies;
 
     [Header("Debug")]
     [SerializeField] bool showDebugLogs = true;
 
-    int fixedAnomalies;
+    public int fixedAnomalies;
 
     public bool AllAnomaliesFixed => fixedAnomalies >= anomalies.Length;
 
