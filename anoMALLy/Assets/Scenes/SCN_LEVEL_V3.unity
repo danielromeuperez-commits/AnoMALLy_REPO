@@ -16930,7 +16930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 781306142568641941, guid: 8f1acaf9f5ea6014f982b980be2b526b, type: 3}
       propertyPath: m_TagString
-      value: modificated_obj_anomaly
+      value: texture_anomaly
       objectReference: {fileID: 0}
     - target: {fileID: 4717271361554653157, guid: 8f1acaf9f5ea6014f982b980be2b526b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17021,7 +17021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787bcb92840312d4681da50db43437c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyTarget
-  tipo: 4
+  tipo: 3
   isFixed: 0
   objetoCorregido: {fileID: 646188940}
   anomalyManager: {fileID: 186586351}
@@ -34218,6 +34218,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 669490419}
     m_Modifications:
+    - target: {fileID: 3445191042071531655, guid: bac2738731ad7f34aa09273af53ddf52, type: 3}
+      propertyPath: 'm_DirectAudioVolumes.Array.data[0]'
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4286464413462342016, guid: bac2738731ad7f34aa09273af53ddf52, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647

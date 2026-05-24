@@ -7363,7 +7363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2936306528598353644, guid: fc5235d063b88054992feb26827faf3c, type: 3}
       propertyPath: m_TagString
-      value: modificated_obj_anomaly
+      value: texture_anomaly
       objectReference: {fileID: 0}
     - target: {fileID: 9011814748584351756, guid: fc5235d063b88054992feb26827faf3c, type: 3}
       propertyPath: m_Material
@@ -7418,7 +7418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787bcb92840312d4681da50db43437c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyTarget
-  tipo: 4
+  tipo: 3
   isFixed: 0
   objetoCorregido: {fileID: 2054388295}
   anomalyManager: {fileID: 186586351}
@@ -37070,7 +37070,7 @@ PrefabInstance:
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[2]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 382728052}
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[3]'
       value: 
