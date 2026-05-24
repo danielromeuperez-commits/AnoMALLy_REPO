@@ -36292,6 +36292,17 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &1906760358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 784620005644781409, guid: 65f2915463615ca4eb4ccc4dc8f44e00, type: 3}
+  m_PrefabInstance: {fileID: 1018559004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787bcb92840312d4681da50db43437c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnomalyTarget
 --- !u!1001 &1919551848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38650,7 +38661,7 @@ PrefabInstance:
       objectReference: {fileID: 1953925874}
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: anomalies.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[0]'
@@ -38671,7 +38682,7 @@ PrefabInstance:
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[4]'
       value: 
-      objectReference: {fileID: 1861761697}
+      objectReference: {fileID: 1906760358}
     - target: {fileID: 8849446816737015355, guid: 0dd271a89eebc694284025c389a96106, type: 3}
       propertyPath: 'anomalies.Array.data[5]'
       value: 
