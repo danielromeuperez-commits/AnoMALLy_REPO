@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         lookRotation += -lookInput.y * sensitivity;
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
 
-        camHolder.transform.localEulerAngles = new Vector3(lookRotation, 0f, 0f);
+        camHolder.transform.localRotation = Quaternion.Euler(lookRotation, 0f, 0f);
     }
 
     public void SetControls(bool value)
