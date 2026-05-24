@@ -22352,6 +22352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Poster Ba\xF1o 2"
       objectReference: {fileID: 0}
+    - target: {fileID: 742468786939941260, guid: 27577b06aa09e42408d245b3d90e6eac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5167579821250257503, guid: 27577b06aa09e42408d245b3d90e6eac, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.000003
