@@ -185,6 +185,11 @@ public class AnomalyTarget : MonoBehaviour
 
         Debug.Log("Anomalía corregida: " + gameObject.name);
 
+        if (UIAnomalyPopup.Instance != null)
+        {
+            UIAnomalyPopup.Instance.ShowPopup();
+        }
+
         if (stopAmbientAudioOnFixed)
         {
             StopAmbientAudio();
@@ -245,6 +250,11 @@ public class AnomalyTarget : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySFX(wrongSFXIndex);
+        }
+
+        if (UIAnomalyPopup.Instance != null)
+        {
+            UIAnomalyPopup.Instance.ShowPopup();
         }
     }
 }

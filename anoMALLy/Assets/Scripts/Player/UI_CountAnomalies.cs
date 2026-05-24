@@ -14,6 +14,6 @@ public class UI_Count : MonoBehaviour
 
     void ActualizarUI()
     {
-        textAnomaly.text = "Fixed Anomalies " + AnoMan.fixedAnomalies + "/ Total Anomalies " + AnoMan.anomalies.Length;
+        textAnomaly.text = "Fixed Anomalies: " + AnoMan.fixedAnomalies + " | Total Anomalies: " + AnoMan.anomalies.Length;
     }
 }
